@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Hero, BG_Hero, P1, P2, P3, P4, P5, P6, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, N1 } from '../media'
 import { Link } from 'react-router-dom'
+import { Comporto } from '../components'
 import { BsArrowRight, BsInstagram, BsTwitter, BsFacebook, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
+
 const Home = () => {
+    const [data, setData] = useState([
+        { id: 1, title: "Air Mineral Pelangi", type: "website", pict: P1, link: "#" },
+        { id: 2, title: "Goal.com X Rexona", type: "website", pict: P2, link: "#" },
+        { id: 3, title: "Andalan Finance", type: "webapp", pict: P3, link: "#" },
+        { id: 4, title: "Zuna Sport", type: "website", pict: P4, link: "#" },
+    ])
     return (
         <div className='w-full'>
             {/* Hero Image */}
@@ -11,48 +19,50 @@ const Home = () => {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
             }}>
-                <div className='w-10/12 mx-auto flex justify-center items-center'>
-                    <div className='flex-1'>
-                        <h1 className='text-6xl pt-32 font-bold'>Humanize Business <span className='text-red-700'>Through</span> Technology</h1>
-                        <p className='text-xl font-semibold mt-8'>Evolve Business By Holding Technology</p>
+                <div className='md:w-10/12 w-11/12 mx-auto flex md:flex-row flex-col justify-center items-center'>
+                    <div className='flex-1 md:order-1 order-2'>
+                        <h1 className='md:text-6xl text-5xl md:pt-32 pt-2 font-bold'>Humanize Business <span className='text-red-700'>Through</span> Technology</h1>
+                        <p className='text-xl font-semibold md:mt-8 mt-4'>Evolve Business By Holding Technology</p>
                         <Link
-                            to="/portfolios"
-                            className="py-3 px-8 bg-red-600 text-white font-semibold text-xl rounded-lg mt-20 inline-flex items-center"
+                            to="/portofolios"
+                            className="md:py-3 py-2 md:px-8 px-6 bg-red-600 text-white font-semibold text-xl rounded-lg md:mt-20 mt-8 inline-flex items-center"
                         >
                             <span>See Our Portfolios</span>
                             <BsArrowRight className="ml-2 font-semibold" />
                         </Link>
-                        {/* Social Media */}
-                        <div className='flex space-x-4 mt-16'>
-                            <a href="#"><BsInstagram className='text-2xl text-slate-800' /></a>
-                            <a href="#"><BsFacebook className='text-2xl text-slate-800' /></a>
-                            <a href="#"><BsTwitter className='text-2xl text-slate-800' /></a>
-                        </div>
                     </div>
-                    <div className='flex-1 flex justify-center items-center cursor-pointer'>
-                        <img className='w-1/2' src={Hero} />
-                        <div className='absolute bottom-5 right-5 inline-flex items-center'>
-                            <p className='uppercase text-slate-800 text-sm text-semibold'>Scroll for More</p>
-                            <BsArrowDownShort className="ml-2 font-semibold text-red-800" />
-                        </div>
+                    <div className='flex-1 md:order-2 order-1 flex justify-center items-center cursor-pointer md:pt-0 pt-20'>
+                        <img className='md:w-1/2 w-1/4' src={Hero} />
+                    </div>
+                </div>
+                {/* Social Media */}
+                <div className='flex w-11/12 mx-auto justify-between items-center mt-16'>
+                    <div className='flex space-x-4'>
+                        <a href="#"><BsInstagram className='text-2xl text-slate-800' /></a>
+                        <a href="#"><BsFacebook className='text-2xl text-slate-800' /></a>
+                        <a href="#"><BsTwitter className='text-2xl text-slate-800' /></a>
+                    </div>
+                    <div className='inline-flex items-center'>
+                        <a href="#morehome" className='uppercase text-slate-800 text-sm text-semibold'>Scroll for More</a>
+                        <BsArrowDownShort className="ml-2 font-semibold text-red-800" />
                     </div>
                 </div>
             </div>
 
             {/* Wise Word */}
-            <div className='w-10/12 mx-auto py-28 px-32'>
+            <div className='w-10/12 mx-auto md:py-28 py-14 md:px-32' id="morehome">
                 <p className='text-4xl'>"<span className='text-red-600 font-bold text-6xl'>WSU</span> is dedicated and passionate about helping businesses thrive through technology. We are a local company with a global passion and mission"</p>
-                <div>
+                <div className='flex'>
                     <Link
                         to="/aboutus"
-                        className="py-3 px-8 bg-slate-800 text-white font-semibold text-xl rounded-lg mt-8 mr-5 inline-flex items-center"
+                        className="md:py-3 py-1.5 md:px-8 px-6 bg-slate-800 text-white font-semibold md:text-xl text-md rounded-lg mt-8 mr-5 inline-flex items-center"
                     >
                         <span>About Us</span>
                         <BsArrowRight className="ml-2 font-semibold" />
                     </Link>
                     <Link
                         to="/services"
-                        className="py-3 px-8 border-slate-800 border-2 text-slate-900 font-semibold text-xl rounded-lg mt-8 mr-5 inline-flex items-center"
+                        className="md:py-3 py-1.5 md:px-8 px-6 border-slate-800 border-2 text-slate-900 font-semibold md:text-xl text-md rounded-lg mt-8 mr-5 inline-flex items-center"
                     >
                         <span>Our Services</span>
                         <BsArrowRight className="ml-2 font-semibold" />
@@ -61,39 +71,14 @@ const Home = () => {
             </div>
 
             {/* Projects Peek */}
-            <div className='w-10/12 mx-auto'>
+            <div className='md:w-10/12 w-11/12 mx-auto'>
                 <h2 className='text-5xl font-bold'>Selected <br /><span className='text-red-600'>Project</span></h2>
                 <div className='flex flex-wrap mt-8 justify-around'>
-                    <div className='flex flex-col w-5/12 m-8'>
-                        <img src={P1} />
-                        <p className='font-bold mt-4 text-xl'>Air Mineral Pelangi</p>
-                        <p>Website Dev</p>
-                    </div>
-                    <div className='flex flex-col w-5/12 m-8'>
-                        <img src={P2} />
-                        <p className='font-bold mt-4 text-xl'>Goal.com X Rexona</p>
-                        <p>Website Dev</p>
-                    </div>
-                    <div className='flex flex-col w-5/12 m-8'>
-                        <img src={P3} />
-                        <p className='font-bold mt-4 text-xl'>Andalan Finance</p>
-                        <p>Mobile Apps Dev, Website Dev</p>
-                    </div>
-                    <div className='flex flex-col w-5/12 m-8'>
-                        <img src={P4} />
-                        <p className='font-bold mt-4 text-xl'>Zuna Sport</p>
-                        <p>Website Dev</p>
-                    </div>
-                    <div className='flex flex-col w-5/12 m-8'>
-                        <img src={P5} />
-                        <p className='font-bold mt-4 text-xl'>Lippo Insurance</p>
-                        <p>Mobile Apps Dev</p>
-                    </div>
-                    <div className='flex flex-col w-5/12 m-8'>
-                        <img src={P6} />
-                        <p className='font-bold mt-4 text-xl'>Pasarku</p>
-                        <p>Mobile Apps Dev, Website Dev</p>
-                    </div>
+                    {data.map(element => {
+                        return (
+                            <Comporto key={element.id} id={element.id} title={element.title} type={element.type} pict={element.pict} link={element.link} />
+                        )
+                    })}
                 </div>
             </div>
             <div className='w-full flex justify-center'>
@@ -107,47 +92,47 @@ const Home = () => {
             </div>
 
             {/* Clients */}
-            <div className='w-10/12 mx-auto mt-16'>
+            <div className='md:w-10/12 w-11/12 mx-auto mt-16'>
                 <h2 className='text-5xl font-bold'>Our Esteemed <br /><span className='text-red-600'>Clients</span></h2>
                 <div className='flex flex-wrap justify-around gap-x-5'>
-                    <img className='w-2/12' src={C1} />
-                    <img className='w-2/12' src={C2} />
-                    <img className='w-2/12' src={C3} />
-                    <img className='w-2/12' src={C4} />
-                    <img className='w-2/12' src={C5} />
-                    <img className='w-2/12' src={C6} />
-                    <img className='w-2/12' src={C7} />
-                    <img className='w-2/12' src={C8} />
-                    <img className='w-2/12' src={C9} />
-                    <img className='w-2/12' src={C10} />
-                    <img className='w-2/12' src={C11} />
-                    <img className='w-2/12' src={C12} />
-                    <img className='w-2/12' src={C13} />
-                    <img className='w-2/12' src={C14} />
-                    <img className='w-2/12' src={C15} />
-                    <img className='w-2/12' src={C16} />
+                    <img className='md:w-2/12 w-4/12' src={C1} />
+                    <img className='md:w-2/12 w-4/12' src={C2} />
+                    <img className='md:w-2/12 w-4/12' src={C3} />
+                    <img className='md:w-2/12 w-4/12' src={C4} />
+                    <img className='md:w-2/12 w-4/12' src={C5} />
+                    <img className='md:w-2/12 w-4/12' src={C6} />
+                    <img className='md:w-2/12 w-4/12' src={C7} />
+                    <img className='md:w-2/12 w-4/12' src={C8} />
+                    <img className='md:w-2/12 w-4/12' src={C9} />
+                    <img className='md:w-2/12 w-4/12' src={C10} />
+                    <img className='md:w-2/12 w-4/12' src={C11} />
+                    <img className='md:w-2/12 w-4/12' src={C12} />
+                    <img className='md:w-2/12 w-4/12' src={C13} />
+                    <img className='md:w-2/12 w-4/12' src={C14} />
+                    <img className='md:w-2/12 w-4/12' src={C15} />
+                    <img className='md:w-2/12 w-4/12' src={C16} />
                 </div>
             </div>
 
             {/* News Update */}
             <div className='w-10/12 mx-auto mt-16'>
                 <h2 className='text-5xl font-bold'>New <br /><span className='text-red-600'>Updates</span></h2>
-                <div className='flex gap-x-5 mt-8'>
-                    <div className='w-4/12'>
+                <div className='flex md:flex-nowrap flex-wrap justify-center gap-x-5 mt-8'>
+                    <div className='md:w-4/12 mt-10 md:mt-0 w-8/12'>
                         <img src={N1} />
                         <div>
                             <p className='font-bold mt-4 text-xl'>“Enhancing….. Training” sambil menikmati suasana Bali!</p>
                             <p className='font-light mt-2 text-sm'>January 5, 2021</p>
                         </div>
                     </div>
-                    <div className='w-4/12'>
+                    <div className='md:w-4/12 mt-10 md:mt-0 w-8/12'>
                         <img src={N1} />
                         <div>
                             <p className='font-bold mt-4 text-xl'>“Enhancing….. Training” sambil menikmati suasana Bali!</p>
                             <p className='font-light mt-2 text-sm'>January 5, 2021</p>
                         </div>
                     </div>
-                    <div className='w-4/12'>
+                    <div className='md:w-4/12 mt-10 md:mt-0 w-8/12'>
                         <img src={N1} />
                         <div>
                             <p className='font-bold mt-4 text-xl'>“Enhancing….. Training” sambil menikmati suasana Bali!</p>

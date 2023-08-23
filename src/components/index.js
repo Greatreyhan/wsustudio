@@ -1,4 +1,4 @@
 import Footer from "./footer";
 import Navigation from "./navigation";
-
-export {Footer, Navigation}
+import Comporto from "./comporto";
+export {Footer, Navigation, Comporto}

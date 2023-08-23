@@ -5,7 +5,7 @@ import {Logo, Hero} from "./media"
 const App = () => {
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter id="#top">
       <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />

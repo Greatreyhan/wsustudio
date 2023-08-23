@@ -58,4 +58,17 @@ import M2 from "./M2.png"
 import M3 from "./M3.png"
 import M4 from "./M4.png"
 import M5 from "./M5.png"
-export {Logo, Hero, BG_Hero, P1, P2, P3, P4, P5, P6, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, N1, S1, S2, S3, S4, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, M1, M2, M3, M4, M5}
+import P7 from "./P7.png"
+import P8 from "./P8.png"
+import P9 from "./P9.png"
+import P11 from "./P11.png"
+import P12 from "./P12.png"
+import P13 from "./P13.png"
+import P14 from "./P14.png"
+import P15 from "./P15.png"
+import P16 from "./P16.png"
+import P17 from "./P17.png"
+import P18 from "./P18.png"
+import P19 from "./P19.png"
+
+export {Logo, Hero, BG_Hero, P1, P2, P3, P4, P5, P6, P7, P8, P9, P11, P12, P13, P14, P15, P16, P17, P18, P19, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, N1, S1, S2, S3, S4, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, M1, M2, M3, M4, M5}
