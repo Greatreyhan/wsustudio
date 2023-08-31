@@ -28,7 +28,7 @@ const Footer = () => {
           <BsArrowUpShort className="ml-2 font-semibold text-red-800" />
         </a>
         {/* Social Media */}
-        <div className='flex space-x-4 w-4/12 justify-end items-center'>
+        <div className='flex space-x-4 w-4/12 justify-end items-center' id="contact">
           <a href="#"><BsInstagram className='text-2xl text-slate-800' /></a>
           <a href="#"><BsFacebook className='text-2xl text-slate-800' /></a>
           <a href="#"><BsTwitter className='text-2xl text-slate-800' /></a>
