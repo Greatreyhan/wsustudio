@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/wsustudio/static/css/main.0663c101.css",
-    "main.js": "/wsustudio/static/js/main.c8452216.js",
+    "main.js": "/wsustudio/static/js/main.bc03ec82.js",
     "static/js/787.9d71c61b.chunk.js": "/wsustudio/static/js/787.9d71c61b.chunk.js",
     "static/media/M2.png": "/wsustudio/static/media/M2.fcf22657e92415ef41b3.png",
     "static/media/M5.png": "/wsustudio/static/media/M5.81e3a3c3d20e49fb7674.png",
@@ -54,14 +54,14 @@
     "static/media/T22.png": "/wsustudio/static/media/T22.037317b59182deace587.png",
     "static/media/T17.png": "/wsustudio/static/media/T17.6f69de0f5c34097b37f3.png",
     "static/media/T6.png": "/wsustudio/static/media/T6.08741cc2f1861f8f8a02.png",
-    "static/media/BG_Crown.svg": "/wsustudio/static/media/BG_Crown.96cab8591e66115ff454b9306238bbe7.svg",
+    "static/media/BG_Crown.svg": "/wsustudio/static/media/BG_Crown.f4d0ce104d0c8a5b84907443ba062664.svg",
     "index.html": "/wsustudio/index.html",
     "main.0663c101.css.map": "/wsustudio/static/css/main.0663c101.css.map",
-    "main.c8452216.js.map": "/wsustudio/static/js/main.c8452216.js.map",
+    "main.bc03ec82.js.map": "/wsustudio/static/js/main.bc03ec82.js.map",
     "787.9d71c61b.chunk.js.map": "/wsustudio/static/js/787.9d71c61b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0663c101.css",
-    "static/js/main.c8452216.js"
+    "static/js/main.bc03ec82.js"
   ]
 }
