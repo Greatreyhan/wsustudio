@@ -46,7 +46,7 @@ const Services = () => {
           <div className='w-5/12 pl-16 pr-8'>
             <h2 className='font-bold text-3xl'>MOBILE APP DEV</h2>
             <p className='font-semibold'>(ios + Android)</p>
-            <p className='mt-4'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit</p>
+            <p className='mt-4'>Kami menyediakan pelayanan pembuatan mobile apps dengan pengalaman kami meliputi dari aplikasi finansial tech sampai kepada teknologi lainnya dengan memperhatikan fungsional fitur dan estetika dari aplikasi itu sendiri </p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + iOS</li>
@@ -60,7 +60,7 @@ const Services = () => {
         <div className='flex items-center justify-center mt-28'>
           <div className='w-5/12 pr-8 pl-8'>
             <h2 className='font-bold text-3xl'>WEB DEV</h2>
-            <p className='mt-4'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit</p>
+            <p className='mt-4'>Kami menyediakan layanan pengembangan web profesional yang mencakup seluruh spektrum kebutuhan bisnis Anda. Mulai dari desain web yang responsif dan user-friendly hingga pengembangan fitur-fitur khusus, tim kami menggunakan teknologi terbaru untuk memastikan website Anda tidak hanya terlihat menarik, tetapi juga berfungsi optimal di berbagai perangkat. Kami berkomitmen untuk menghadirkan solusi web yang inovatif, aman, dan dapat diandalkan untuk membantu meningkatkan visibilitas online dan efisiensi operasional bisnis Anda. </p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + React, Next.js, Gatsby</li>
@@ -81,7 +81,7 @@ const Services = () => {
           <div className='w-5/12 pl-16 pr-8'>
             <h2 className='font-bold text-3xl'>BACKEND AND DEVOPS</h2>
             <p className='font-semibold'>(ios + Android)</p>
-            <p className='mt-4'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit</p>
+            <p className='mt-4'>Layanan backend dan DevOps kami dirancang untuk memastikan performa tinggi dan stabilitas aplikasi Anda. Tim kami mengelola infrastruktur server, basis data, dan integrasi API dengan keahlian dalam berbagai bahasa pemrograman dan framework seperti Node.js, Python, dan PHP. Kami juga menerapkan praktik terbaik dalam CI/CD (Continuous Integration/Continuous Deployment) untuk mempercepat proses pengembangan dan pengiriman kode. Dengan fokus pada otomatisasi, skalabilitas, dan keamanan, layanan DevOps kami membantu meminimalkan downtime dan memastikan bahwa aplikasi Anda selalu siap untuk menghadapi beban kerja yang tinggi.</p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + Node.js, C#, Python, Golang</li>
@@ -95,7 +95,7 @@ const Services = () => {
         <div className='flex items-center justify-center mt-28'>
           <div className='w-5/12 pr-8 pl-8'>
             <h2 className='font-bold text-3xl'>IT CONSULTING SERVICES</h2>
-            <p className='mt-4'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit</p>
+            <p className='mt-4'>Kami menawarkan layanan konsultasi IT yang komprehensif untuk membantu bisnis Anda merancang dan mengimplementasikan strategi teknologi yang efektif. Dengan pengetahuan mendalam dan pengalaman luas di berbagai industri, konsultan kami bekerja sama dengan Anda untuk memahami kebutuhan bisnis Anda dan memberikan solusi yang disesuaikan. Mulai dari analisis sistem, perencanaan teknologi, hingga implementasi dan pengelolaan proyek IT, kami memastikan bahwa setiap langkah yang diambil sejalan dengan tujuan bisnis Anda dan memberikan nilai tambah yang nyata. </p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + React, Next.js, Gatsby</li>

@@ -15,13 +15,13 @@ const Home = () => {
                     <div className='flex-1'>
                         <h1 className='text-6xl pt-32 font-bold'>Humanize Business <span className='text-red-700'>Through</span> Technology</h1>
                         <p className='text-xl font-semibold mt-8'>Evolve Business By Holding Technology</p>
-                        <Link
-                            to="/portfolios"
+                        <a
+                            href="https://www.canva.com/design/DAF0w-TY6dQ/9eAB5lS_jWkI6GQLmnM9Vw/view?utm_content=DAF0w-TY6dQ&utm_campaign=designshare&utm_medium=link&utm_source=editor "
                             className="py-3 px-8 bg-red-600 text-white font-semibold text-xl rounded-lg mt-20 inline-flex items-center"
                         >
                             <span>See Our Portfolios</span>
                             <BsArrowRight className="ml-2 font-semibold" />
-                        </Link>
+                        </a>
                         {/* Social Media */}
                         <div className='flex space-x-4 mt-16'>
                             <a href="#"><BsInstagram className='text-2xl text-slate-800' /></a>
@@ -130,7 +130,7 @@ const Home = () => {
             </div>
 
             {/* News Update */}
-            <div className='w-10/12 mx-auto mt-16'>
+            {/* <div className='w-10/12 mx-auto mt-16'>
                 <h2 className='text-5xl font-bold'>New <br /><span className='text-red-600'>Updates</span></h2>
                 <div className='flex gap-x-5 mt-8'>
                     <div className='w-4/12'>
@@ -164,7 +164,7 @@ const Home = () => {
                         <BsArrowRight className="ml-2 font-semibold" />
                     </Link>
                 </div>
-            </div>
+            </div> */}
 
         </div>
     )
