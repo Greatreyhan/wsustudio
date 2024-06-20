@@ -23,13 +23,13 @@ const Home = () => {
                     <div className='flex-1 md:order-1 order-2'>
                         <h1 className='md:text-6xl text-5xl md:pt-32 pt-2 font-bold'>Humanize Business <span className='text-red-700'>Through</span> Technology</h1>
                         <p className='text-xl font-semibold md:mt-8 mt-4'>Evolve Business By Holding Technology</p>
-                        <Link
-                            to="/portofolios"
+                        <a
+                            href="https://www.canva.com/design/DAF0w-TY6dQ/9eAB5lS_jWkI6GQLmnM9Vw/view?utm_content=DAF0w-TY6dQ&utm_campaign=designshare&utm_medium=link&utm_source=editor "
                             className="md:py-3 py-2 md:px-8 px-6 bg-red-600 text-white font-semibold text-xl rounded-lg md:mt-20 mt-8 inline-flex items-center"
                         >
                             <span>See Our Portfolios</span>
                             <BsArrowRight className="ml-2 font-semibold" />
-                        </Link>
+                        </a>
                     </div>
                     <div className='flex-1 md:order-2 order-1 flex justify-center items-center cursor-pointer md:pt-0 pt-20'>
                         <img className='md:w-1/2 w-1/4' src={Hero} />
@@ -115,7 +115,7 @@ const Home = () => {
             </div>
 
             {/* News Update */}
-            <div className='w-10/12 mx-auto mt-16'>
+            {/* <div className='w-10/12 mx-auto mt-16'>
                 <h2 className='text-5xl font-bold'>New <br /><span className='text-red-600'>Updates</span></h2>
                 <div className='flex md:flex-nowrap flex-wrap justify-center gap-x-5 mt-8'>
                     <div className='md:w-4/12 mt-10 md:mt-0 w-8/12'>
@@ -149,7 +149,7 @@ const Home = () => {
                         <BsArrowRight className="ml-2 font-semibold" />
                     </Link>
                 </div>
-            </div>
+            </div> */}
 
         </div>
     )

@@ -10,13 +10,13 @@ const Footer = () => {
         <h2 className='text-5xl font-bold text-center'>Let's <span className='text-red-600'>Go</span></h2>
         <p className='text-2xl font-bold md:px-60 mt-4'>We treat our clients like they’re part of the family — because we love getting to be creative and work with awesome people, like you.</p>
         <div className='flex justify-center'>
-          <Link
-            to="/aboutus"
+        <a
+            href="https://wa.me/6282113017363?text=Halo%2C%20dengan%20tim%20bisnis%20WSU%3F%20Saya%20ingin%20dibantu"
             className="py-2 px-6 bg-slate-800 text-white font-semibold text-md rounded-lg mt-8 mr-5 inline-flex items-center"
           >
             <span>Contact Us</span>
             <BsArrowRight className="ml-2 font-semibold" />
-          </Link>
+          </a>
         </div>
       </div>
 

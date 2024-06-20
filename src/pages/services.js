@@ -60,7 +60,7 @@ const Services = () => {
           <div className='md:w-5/12 w-10/12 md:pl-16 pl-0 md:mt-0 mt-8 pr-8'>
             <h2 className='font-bold text-3xl'>MOBILE APP DEV</h2>
             <p className='font-semibold'>(ios + Android)</p>
-            <p className='mt-4'>Whether your preference lies with the versatile Android system or the sleek and cohesive iOS environment, you have the autonomy to select the ecosystem that best aligns with and complements your unique business objectives. This pivotal decision empowers you to tailor your digital presence to the preferences of your target audience, ensuring a seamless and engaging user experience. By choosing the platform that resonates with your brand's identity and values, you're taking a deliberate step towards optimizing your business's reach and impact in the increasingly mobile-driven landscape.</p>
+            <p className='mt-4'>Kami menyediakan pelayanan pembuatan mobile apps dengan pengalaman kami meliputi dari aplikasi finansial tech sampai kepada teknologi lainnya dengan memperhatikan fungsional fitur dan estetika dari aplikasi itu sendiri.</p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + iOS</li>
@@ -74,7 +74,7 @@ const Services = () => {
         <div className='flex md:flex-row flex-col items-center justify-center md:mt-28 mt-14'>
           <div className='md:w-5/12 w-10/12 md:pr-8 pr-0 md:pl-8 pl-0 md:order-1 order-2 md:mt-0 mt-4'>
             <h2 className='font-bold text-3xl'>WEB DEV</h2>
-            <p className='mt-4'>We specialize in offering a diverse range of meticulously designed websites tailored to precisely match and enhance your unique business requirements. Our comprehensive selection of website options ensures that you'll find the perfect online platform to effectively showcase your products or services, engage your target audience, and achieve your strategic goals. Whether you're seeking an elegant and informative portfolio site or a dynamic e-commerce platform, we have the expertise to deliver a solution that not only meets but exceeds your expectations. Your business deserves nothing less than a digital presence that resonates with your vision, and that's exactly what we're here to provide.</p>
+            <p className='mt-4'>Kami menyediakan layanan pengembangan web profesional yang mencakup seluruh spektrum kebutuhan bisnis Anda. Mulai dari desain web yang responsif dan user-friendly hingga pengembangan fitur-fitur khusus, tim kami menggunakan teknologi terbaru untuk memastikan website Anda tidak hanya terlihat menarik, tetapi juga berfungsi optimal di berbagai perangkat. Kami berkomitmen untuk menghadirkan solusi web yang inovatif, aman, dan dapat diandalkan untuk membantu meningkatkan visibilitas online dan efisiensi operasional bisnis Anda.</p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + React, Next.js, Gatsby</li>
@@ -96,7 +96,7 @@ const Services = () => {
             <h2 className='font-bold text-3xl'>BACKEND AND DEVOPS</h2>
             <p className='font-semibold'>(ios + Android)</p>
             <p className='mt-4'>
-              Integrating seamlessly with your chosen platform, whether it's Android or iOS, our expertise extends beyond the frontend. With our proficiency in developing applications that synchronize flawlessly with backend systems such as Point of Sales (POS), Enterprise Resource Planning (ERP), and Customer Relationship Management (CRM), our team is fully equipped to craft specialized applications that cater precisely to your business needs.</p>
+            Layanan backend dan DevOps kami dirancang untuk memastikan performa tinggi dan stabilitas aplikasi Anda. Tim kami mengelola infrastruktur server, basis data, dan integrasi API dengan keahlian dalam berbagai bahasa pemrograman dan framework seperti Node.js, Python, dan PHP. Kami juga menerapkan praktik terbaik dalam CI/CD (Continuous Integration/Continuous Deployment) untuk mempercepat proses pengembangan dan pengiriman kode. Dengan fokus pada otomatisasi, skalabilitas, dan keamanan, layanan DevOps kami membantu meminimalkan downtime dan memastikan bahwa aplikasi Anda selalu siap untuk menghadapi beban kerja yang tinggi.</p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + Node.js, C#, Python, Golang</li>
@@ -110,7 +110,7 @@ const Services = () => {
         <div className='flex md:flex-row flex-col items-center justify-center md:mt-28 mt-14'>
           <div className='md:w-5/12 w-10/12 md:pr-8 pr-0 md:pl-8 pl-0 md:order-1 order-2 md:mt-0 mt-4'>
             <h2 className='font-bold text-3xl'>IT CONSULTING SERVICES</h2>
-            <p className='mt-4'>By embracing a DMS, organizations can transcend the limitations of traditional document handling, ushering in a digital era where documents are effortlessly accessed, meticulously organized, and swiftly retrieved. This transformative approach significantly reduces the reliance on physical paper documents, leading to heightened efficiency, cost savings, and a greener footprint. Whether it's about facilitating collaboration, enhancing regulatory compliance, or simply embracing a future-oriented document management strategy, a DMS is a versatile tool that empowers businesses to thrive in the modern digital landscape.</p>
+            <p className='mt-4'>Kami menawarkan layanan konsultasi IT yang komprehensif untuk membantu bisnis Anda merancang dan mengimplementasikan strategi teknologi yang efektif. Dengan pengetahuan mendalam dan pengalaman luas di berbagai industri, konsultan kami bekerja sama dengan Anda untuk memahami kebutuhan bisnis Anda dan memberikan solusi yang disesuaikan. Mulai dari analisis sistem, perencanaan teknologi, hingga implementasi dan pengelolaan proyek IT, kami memastikan bahwa setiap langkah yang diambil sejalan dengan tujuan bisnis Anda dan memberikan nilai tambah yang nyata.</p>
             <p className='mt-4 text-red-700 font-bold'>What we do?</p>
             <ul className='font-semibold'>
               <li> + React, Next.js, Gatsby</li>
