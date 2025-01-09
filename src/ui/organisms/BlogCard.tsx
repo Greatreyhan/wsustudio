@@ -24,7 +24,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ imgArt, title, tag, desc, dateTime 
     text.length > maxLength ? `${text.slice(0, maxLength - 3)}...` : text;
 
   return (
-    <div className="w-80 my-4 pb-10 bg-white rounded-xl shadow-lg relative">
+    <div className="w-80 pb-10 bg-white rounded-xl shadow-lg relative">
       <div>
         <div className="w-full h-48">
           <img

@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { ReactNode } from 'react';
+import { Footer, Navigation } from '../organisms';
 
-const LandingTemplate = () => {
-  return (
-    <div>
-        {/* Top Nav Menu */}
-
-        {/* Footer Menu */}
-    </div>
-  )
+interface LandingTemplateProps {
+  children: ReactNode;
 }
 
-export default LandingTemplate
+const LandingTemplate: React.FC<LandingTemplateProps> = ({ children }) => {
+  return (
+    <div>
+      <Navigation />
+      {children}
+      <Footer />
+    </div>
+  );
+};
+
+export default LandingTemplate;

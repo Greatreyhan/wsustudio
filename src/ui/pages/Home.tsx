@@ -176,7 +176,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-slate-800 w-10/12 mx-auto p-14 rounded-3xl">
+      <div className="bg-base-dark w-10/12 mx-auto p-14 rounded-3xl">
         <h3 className="text-4xl text-white uppercase font-semibold">
           Got an Idea?
         </h3>

@@ -4,51 +4,92 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import {Aboutus, Article, Blog, Contactus, Home, Login, Portofolio, Service, Editor, Admin} from "./ui/pages"
-import {Footer, Navigation, PortoDetail} from "./ui/organisms"
+import { Aboutus, Article, Blog, Contactus, Home, Login, Portofolio, Service, Editor, Admin } from "./ui/pages"
+import { PortoDetail } from "./ui/organisms"
 import { FirebaseProvider } from './utils/FirebaseContext';
 import Career from './ui/pages/Career';
-import PrivateRoute from './utils/PrivateRoute';
 import AdminTemplate from './ui/templates/AdminTemplate';
 import AdminPortofolio from './ui/pages/AdminPortofolio';
 import AdminPortofolioEditor from './ui/pages/AdminPortofolioEditor';
 import AdminArticleEditor from './ui/pages/AdminArticleEditor';
 import AdminArticle from './ui/pages/AdminArticle';
 import AdminEditor from './ui/pages/AdminEditor';
+import LandingTemplate from './ui/templates/LandingTemplate';
+import AdminCareer from './ui/pages/AdminCareer';
+import AdminCareerEditor from './ui/pages/AdminCareerEditor';
+import AdminService from './ui/pages/AdminService';
+import AdminServiceEditor from './ui/pages/AdminServiceEditor';
 
 function App() {
 
+  const routes = [
+    // Landing Template Routes
+    { path: "/", element: <Home />, type: "landing" },
+    { path: "/service", element: <Service />, type: "landing" },
+    { path: "/service/:serviceId", element: <Service />, type: "landing" },
+    { path: "/portofolio", element: <Portofolio />, type: "landing" },
+    { path: "/about", element: <Aboutus />, type: "landing" },
+    { path: "/career", element: <Career />, type: "landing" },
+    { path: "/blog", element: <Blog />, type: "landing" },
+    { path: "/portofolio/:id", element: <PortoDetail />, type: "landing" },
+    { path: "/review", element: <Contactus />, type: "landing" },
+    { path: "/contact", element: <Contactus />, type: "landing" },
+    { path: "/article/:id", element: <Article />, type: "landing" },
+
+    // Login Route
+    { path: "/login", element: <Login />, type: "basic" },
+
+    // Admin Template Routes
+    { path: "/admin/portofolio", element: <AdminPortofolio />, type: "admin" },
+    { path: "/admin/add-portofolio", element: <AdminPortofolioEditor />, type: "admin" },
+    { path: "/admin/edit-portofolio/:id", element: <AdminPortofolioEditor />, type: "admin" },
+    { path: "/admin/add-article", element: <AdminArticleEditor />, type: "admin" },
+    { path: "/admin/edit-article/:id", element: <AdminArticleEditor />, type: "admin" },
+    { path: "/admin/article", element: <AdminArticle />, type: "admin" },
+    { path: "/admin/add-career", element: <AdminCareerEditor />, type: "admin" },
+    { path: "/admin/edit-career/:id", element: <AdminCareerEditor />, type: "admin" },
+    { path: "/admin/career", element: <AdminCareer />, type: "admin" },
+    { path: "/admin/service", element: <AdminService />, type: "admin" },
+    { path: "/admin/add-service", element: <AdminServiceEditor />, type: "admin" },
+    { path: "/editor", element: <Editor />, type: "admin" },
+    { path: "/admin", element: <Admin />, type: "admin" },
+    { path: "/editor/:id", element: <AdminEditor />, type: "admin" },
+  ];
+
   return (
     <FirebaseProvider>
-    <BrowserRouter>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/service" element={<Service/>}></Route>
-        <Route path="/portofolio" element={<Portofolio />}></Route>
-        <Route path="/about" element={<Aboutus />}></Route>
-        <Route path="/career" element={<Career />}></Route>
-        <Route path="/blog" element={<Blog />}></Route>
-        <Route path="/portofolio/:id" element={<PortoDetail />}></Route>
-        <Route path="/review" element={<Contactus />}></Route>
-        <Route path="/contact" element={<Contactus />}></Route>
-        <Route path="/article/:id" element={<Article />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route element={<PrivateRoute />} >
-          <Route path="/admin/portofolio" element={<AdminTemplate><AdminPortofolio /></AdminTemplate>}></Route>
-          <Route path="/admin/add-portofolio" element={<AdminTemplate><AdminPortofolioEditor /></AdminTemplate>}></Route>
-          <Route path="/admin/edit-portofolio/:id" element={<AdminTemplate><AdminPortofolioEditor /></AdminTemplate>}></Route>
-          <Route path="/admin/add-article" element={<AdminTemplate><AdminArticleEditor /></AdminTemplate>}></Route>
-          <Route path="/admin/edit-article/:id" element={<AdminTemplate><AdminArticleEditor /></AdminTemplate>}></Route>
-          <Route path="/admin/article" element={<AdminTemplate><AdminArticle /></AdminTemplate>}></Route>
-          <Route path="/editor" element={<AdminTemplate><Editor /></AdminTemplate>}></Route>
-          <Route path="/admin" element={<AdminTemplate><Admin /></AdminTemplate>}></Route>
-          <Route path="/editor/:id" element={<AdminTemplate><AdminEditor/></AdminTemplate>}></Route>
-        </Route>
-      </Routes>
-      <Footer />
-  </BrowserRouter>
-  </FirebaseProvider>
+      <BrowserRouter>
+        <Routes>
+          {routes.map(({ path, element, type }, index) => {
+            if (type === "landing") {
+              return (
+                <Route
+                  key={index}
+                  path={path}
+                  element={<LandingTemplate>{element}</LandingTemplate>}
+                />
+              );
+            } else if (type === "admin") {
+              return (
+                <Route
+                  key={index}
+                  path={path}
+                  element={<AdminTemplate>{element}</AdminTemplate>}
+                />
+              );
+            } else {
+              return (
+                <Route
+                  key={index}
+                  path={path}
+                  element={element}
+                />
+              );
+            }
+          })}
+        </Routes>
+      </BrowserRouter>
+    </FirebaseProvider>
   );
 }
 

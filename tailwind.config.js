@@ -8,9 +8,9 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0837E5', // Deep blue
-          light: '#2653F7',  // Slightly lighter for subtle highlights
-          dark: '#062BB1',   // Very dark blue for contrast
+          DEFAULT: '#CE1212', // Deep blue
+          light: '#EC2727',  // Slightly lighter for subtle highlights
+          dark: '#9F0E0E',   // Very dark blue for contrast
         },
         secondary: {
           DEFAULT: '#EA580C', // Vibrant orange
@@ -23,7 +23,7 @@ export default {
 
         // Base colors
         base: {
-          white: '#FFFFFF',  // Pure white for light themes
+          white: '#F9FAFB',  // Pure white for light themes
           black: '#000000',  // Pure black for dark themes
           light: '#475263',  // Soft white for backgrounds
           dark: '#191919',   // Near-black for dark backgrounds

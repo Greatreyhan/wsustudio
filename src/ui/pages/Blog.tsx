@@ -63,7 +63,7 @@ const Blog: React.FC = () => {
   };
 
   return (
-    <div className="w-full mx-auto bg-slate-100 overflow-x-hidden">
+    <div className="w-full mx-auto bg-white overflow-x-hidden">
       {/* Title Section */}
       <div className="w-full text-center pt-32">
         <h2 className="text-4xl font-medium text-slate-900">Read More Articles</h2>
@@ -79,7 +79,7 @@ const Blog: React.FC = () => {
             <input
               value={queryText}
               onChange={handleQuery}
-              className="w-full px-4 py-3 rounded-full"
+              className="w-full px-4 py-3 rounded-full bg-base-white"
               type="text"
               placeholder="Cari Artikel"
             />
@@ -108,7 +108,7 @@ const Blog: React.FC = () => {
       </div>
 
       {/* Articles */}
-      <div className="w-11/12 mx-auto py-16 flex flex-wrap md:justify-between justify-center">
+      <div className="w-10/12 mx-auto py-16 gap-16 flex flex-wrap md:justify-between justify-center">
         {filteredKey.map((key) => (
           <BlogCard
             key={key}

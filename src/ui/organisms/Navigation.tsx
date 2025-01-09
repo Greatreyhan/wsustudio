@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Logo } from '../../assets/icons';
 
 const Navigation: React.FC = () => {
-  //   const [handleDrop, setHandleDrop] = useState<boolean>(false);
   const [navbar, setNavbar] = useState<boolean>(false);
 
-  const location = useLocation();
-
-  //   const handleDropDown = () => {
-  //     setHandleDrop((prev) => !prev);
-  //   };
 
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     setNavbar((prev) => !prev);
   };
 
-  if (location.pathname.includes('/admin')) return null;
-
   return (
-    <nav className="mx-auto w-full fixed z-50 bg-white">
+    <nav className="mx-auto w-full py-2 fixed z-50 bg-white">
       <div className="md:w-11/12 w-full md:px-0 px-10 rounded-lg mx-auto flex justify-between items-center ">
         <div className="flex w-1/12 h-full justify-center items-center ml-8">
           <img className="w-full" src={Logo} alt="Logo" />

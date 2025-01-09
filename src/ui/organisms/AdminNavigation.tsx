@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoMdApps } from "react-icons/io";
-import { MdInsertPageBreak } from "react-icons/md";
+import { MdInsertPageBreak, MdOutlineDesignServices, MdPerson, MdWork } from "react-icons/md";
 import { TbReportAnalytics, TbReportSearch } from "react-icons/tb";
 import { MdOutlineLogout } from "react-icons/md";
 import { Logo } from '../../assets/icons';
@@ -30,28 +30,36 @@ const AdminNavigation: React.FC = () => {
 
             {/* List Menu */}
             <div className='pt-16 md:flex hidden text-left flex-col text-gray-800 flex-1'>
-                <a href='/admin' className='cursor-pointer hover:font-semibold hover:text-sky-800 text-sm px-6 py-2 flex items-center'>
+                <a href='/admin' className='cursor-pointer hover:font-semibold hover:text-primary-dark text-sm px-6 py-2 flex items-center'>
                     <IoMdApps className='text-2xl mr-1' />
                     <span>Dashboard</span>
                 </a>
-                <a href='/admin/portofolio' className='cursor-pointer hover:font-semibold hover:text-sky-800 text-sm px-6 py-2 flex items-center'>
+                <a href='/admin/portofolio' className='cursor-pointer hover:font-semibold hover:text-primary-dark text-sm px-6 py-2 flex items-center'>
                     <MdInsertPageBreak className='text-2xl mr-1' />
                     <span>Portofolio</span>
                 </a>
-                <a href='/admin/article' className='cursor-pointer hover:font-semibold hover:text-sky-800 text-sm px-6 py-2 flex items-center'>
+                <a href='/admin/article' className='cursor-pointer hover:font-semibold hover:text-primary-dark text-sm px-6 py-2 flex items-center'>
                     <TbReportSearch className='text-2xl mr-1' />
                     <span>Blog</span>
                 </a>
-                <a href='/admin/report' className='cursor-pointer hover:font-semibold hover:text-sky-800 text-sm px-6 py-2 flex items-center'>
-                    <TbReportAnalytics className='text-2xl mr-1' />
+                <a href='/admin/career' className='cursor-pointer hover:font-semibold hover:text-primary-dark text-sm px-6 py-2 flex items-center'>
+                    <MdWork className='text-2xl mr-1' />
                     <span>Career</span>
+                </a>
+                <a href='/admin/service' className='cursor-pointer hover:font-semibold hover:text-primary-dark text-sm px-6 py-2 flex items-center'>
+                    <MdOutlineDesignServices className='text-2xl mr-1' />
+                    <span>Service</span>
+                </a>
+                <a href='/admin/client' className='cursor-pointer hover:font-semibold hover:text-primary-dark text-sm px-6 py-2 flex items-center'>
+                    <MdPerson className='text-2xl mr-1' />
+                    <span>Client</span>
                 </a>
             </div>
 
             {/* Logout */}
             <button
                 onClick={handleLogout}
-                className='text-gray-800 md:flex hidden cursor-pointer hover:font-semibold hover:text-sky-800 text-sm px-6 py-2 items-center'
+                className='text-gray-800 md:flex hidden cursor-pointer hover:font-semibold hover:text-primary-dark text-sm px-6 py-2 items-center'
             >
                 <MdOutlineLogout className='text-2xl mr-1' />
                 <span>Keluar</span>

@@ -53,7 +53,7 @@ const AdminArticle = () => {
       <div className="flex items-center justify-between py-8">
         <p>Total Articles: {keyArticle.length}</p>
         <Link
-          className="inline-flex items-center px-6 py-1.5 bg-sky-800 rounded-full text-white"
+          className="inline-flex items-center px-6 py-1.5 bg-primary rounded-full text-white"
           to={"/admin/add-article"}
         >
           <span className="text-2xl mr-2">+</span>Add

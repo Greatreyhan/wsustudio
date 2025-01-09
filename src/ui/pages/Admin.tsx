@@ -13,6 +13,10 @@ interface PortfolioData {
   [key: string]: any; // Define specific fields if available
 }
 
+interface CareerData {
+  [key: string]: any; // Define specific fields if available
+}
+
 const Admin: React.FC = () => {
   const [dataArt, setDataArt] = useState<ArticleData>({});
   const [keyArticle, setKeyArticle] = useState<string[]>([]);
@@ -20,6 +24,9 @@ const Admin: React.FC = () => {
 
   const [dataPorto, setDataPorto] = useState<PortfolioData>({});
   const [keyPorto, setKeyPorto] = useState<string[]>([]);
+
+  const [dataCareer, setDataCareer] = useState<PortfolioData>({});
+  const [keyCareer, setKeyCareer] = useState<string[]>([]);
 
   useEffect(() => {
     // Fetch articles
@@ -43,6 +50,15 @@ const Admin: React.FC = () => {
         setDataPorto(data);
       }
     });
+
+    onValue(rtdbref(FIREBASE_DB, "career"), (snapshot) => {
+      const data: CareerData | null = snapshot.val();
+      if (data) {
+        const keys = Object.keys(data);
+        setKeyCareer(keys);
+        setDataCareer(data);
+      }
+    });
   }, []);
 
   return (
@@ -62,6 +78,15 @@ const Admin: React.FC = () => {
         <p className="text-4xl text-primary flex justify-end items-end mt-4 font-bold">
           {keyPorto.length}
           <span className="text-sm font-light ml-2">portofolio</span>
+        </p>
+      </div>
+
+      {/* Display Number of Career */}
+      <div className="w-4/12 bg-slate-100 px-8 py-4 rounded-md">
+        <h2 className="text-lg text-slate-900">Total Career</h2>
+        <p className="text-4xl text-primary flex justify-end items-end mt-4 font-bold">
+          {keyCareer.length}
+          <span className="text-sm font-light ml-2">Career</span>
         </p>
       </div>
     </div>
