@@ -35,7 +35,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ imgArt, title, tag, desc, dateTime 
         </div>
         <div className="pb-4">
           <div className="-mt-1 ml-3">
-            <span className="px-5 bg-sky-700 text-white py-1.5 rounded-b-lg text-xs">{tag}</span>
+            <span className="px-5 bg-primary-light text-white py-1.5 rounded-b-lg text-xs">{tag}</span>
           </div>
           <h4 className="text-lg mx-3 font-semibold text-gray-950 mt-4">{title}</h4>
           <p className="text-sm text-gray-700 mx-3 mt-1">{truncateText(desc, 100)}</p>
@@ -43,7 +43,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ imgArt, title, tag, desc, dateTime 
             <p className="text-xs text-slate-700">{dateString}</p>
             <Link
               to={`/article/${dateTime}`}
-              className="px-6 py-1.5 text-white bg-sky-800 rounded-full"
+              className="px-6 py-1.5 text-white bg-primary rounded-full"
             >
               Read
             </Link>

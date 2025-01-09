@@ -1,5 +1,5 @@
 import React from "react";
-import { useFirebase } from "../../utils/FirebaseContext";
+import { useFirebase } from "./FirebaseContext";
 
 import { Outlet, Navigate } from "react-router-dom";
 

@@ -1,11 +1,11 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { FIREBASE_AUTH } from '../config/firebaseinit';
-import { 
-    onAuthStateChanged, 
-    signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword, 
-    signOut, 
-    User 
+import {
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    User,
 } from 'firebase/auth';
 
 // Define the context type
@@ -18,14 +18,14 @@ interface FirebaseContextType {
     errorMessage: string;
 }
 
-// Initialize context with `undefined` to enforce usage of `useFirebase`
+// Initialize the context
 const FirebaseContext = createContext<FirebaseContextType | undefined>(undefined);
 
 // Hook to use Firebase context
 export const useFirebase = (): FirebaseContextType => {
     const context = useContext(FirebaseContext);
     if (!context) {
-        throw new Error("useFirebase must be used within a FirebaseProvider");
+        throw new Error('useFirebase must be used within a FirebaseProvider');
     }
     return context;
 };
@@ -34,7 +34,7 @@ export const useFirebase = (): FirebaseContextType => {
 export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (authUser) => {
@@ -47,8 +47,9 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     const signIn = async (email: string, password: string): Promise<void> => {
         try {
             await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+            setErrorMessage(''); // Clear any existing error messages
         } catch (err: any) {
-            setErrorMessage(err.message);
+            setErrorMessage(err.message || 'Error signing in');
             console.error('Error Sign In:', err);
         }
     };
@@ -56,17 +57,19 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     const signUp = async (email: string, password: string): Promise<void> => {
         try {
             await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
-        } catch (error: any) {
-            setErrorMessage(error.message);
-            console.error('Error signing up:', error);
+            setErrorMessage(''); // Clear any existing error messages
+        } catch (err: any) {
+            setErrorMessage(err.message || 'Error signing up');
+            console.error('Error Sign Up:', err);
         }
     };
 
     const signOutUser = async (): Promise<void> => {
         try {
             await signOut(FIREBASE_AUTH);
+            setErrorMessage(''); // Clear any existing error messages
         } catch (err: any) {
-            setErrorMessage(err.message);
+            setErrorMessage(err.message || 'Error signing out');
             console.error('Error Sign Out:', err);
         }
     };

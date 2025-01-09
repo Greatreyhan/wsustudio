@@ -17,7 +17,7 @@ const PortoDetail: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      const dataRef = rtdbref(FIREBASE_DB, "portodata/" + id);
+      const dataRef = rtdbref(FIREBASE_DB, "portofolio/" + id);
       onValue(dataRef, (snapshot) => {
         const data = snapshot.val();
         setDataDB(data || null);

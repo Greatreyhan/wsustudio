@@ -15,7 +15,7 @@ function Aboutus() {
             <img className="w-8/12" src={HeroAbout} />
           </div>
           <div className="flex-1">
-            <p className="text-3xl text-slate-900">“<span className="font-medium text-sky-800">We are more than just a software house</span>. With over 10 years experience, we have been helping countless individuals bring their digital products to life.​”</p>
+            <p className="text-3xl text-slate-900">“<span className="font-medium text-primary">We are more than just a software house</span>. With over 10 years experience, we have been helping countless individuals bring their digital products to life.​”</p>
             <p className="mt-4 text-slate-700">We built a solid team from scratch to overcome our clients challenges, we take on every project with dedication and commitment. It's not always easy, but together with our clients, whom we consider family, we've made remarkable achievements.</p>
           </div>
         </div>

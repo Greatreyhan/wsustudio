@@ -6,8 +6,8 @@ import Contactus from "./ContactUs"
 import Blog from "./Blog"
 import Editor from "./Editor"
 import Article from "./Article"
-import EditorAdmin from "./EditorAdmin"
+import AdminEditor from "./AdminEditor"
 import Admin from "./Admin"
 import Login from "./Login"
 import SignUp from "./SignUp"
-export {Home, Aboutus, Service, Portofolio, Contactus, Blog, Editor, Article, Admin, EditorAdmin, Login, SignUp}
+export {Home, Aboutus, Service, Portofolio, Contactus, Blog, Editor, Article, Admin, AdminEditor, Login, SignUp}

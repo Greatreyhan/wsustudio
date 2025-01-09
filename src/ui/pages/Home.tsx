@@ -7,15 +7,14 @@ import {
   IconService4,
   IconService5,
   IconService6,
-  LogoClient1,
-  LogoClient2,
-  LogoClient4,
-  LogoClient5,
 } from "../../assets/icons";
-import { HeroHome, Service1, Service2, Service3, Service4, Service5, Service6 } from "../../assets/images";
+import { HeroHome, Partner1, Partner2, Partner3, Partner4, Partner5, Partner6, Partner7, Partner8, Partner9, Partner10, Partner11, Partner12, Partner13, Partner14, Partner15, Partner16, Partner17, Partner18, Partner19, Partner20, Partner21, Service1, Service2, Service3, Service4, Service5, Service6 } from "../../assets/images";
 import { BlogCard, ServiceCard } from "../organisms";
 import { onValue, ref as rtdbref } from "firebase/database";
 import { FIREBASE_DB } from "../../config/firebaseinit";
+import Slider from 'react-infinite-logo-slider'
+import MiniBlog from "../organisms/MiniBlog";
+
 
 interface ArticleData {
   title: string;
@@ -47,13 +46,13 @@ const Home: React.FC = () => {
     <div className="bg-white overflow-x-hidden">
       {/* Header Desktop */}
       <div className="bg-slate-50 text-center pt-28 pb-8">
-        <h1 className="uppercase text-xl text-slate-950 font-normal border border-slate-950 inline-block px-4 py-1 rounded-full">
+        <h1 className="uppercase text-xl text-base-dark font-normal border border-slate-950 inline-block px-4 py-1 rounded-full">
           PT WIDYA SOLUSI UTAMA
         </h1>
-        <h2 className="uppercase text-4xl text-slate-800 font-bold mt-4">
+        <h2 className="uppercase text-4xl text-base-dark font-bold mt-4">
           Humanize Business <br />Through Technology
         </h2>
-        <p className="w-6/12 mx-auto mt-2 text-slate-700">
+        <p className="w-6/12 mx-auto mt-2 text-base-light">
           WSU is dedicated and passionate about helping businesses thrive
           through technology. We are a local company with a global passion and
           mission.
@@ -62,11 +61,11 @@ const Home: React.FC = () => {
         <div className="mt-6">
           <Link
             to="/contact"
-            className="bg-sky-800 text-white px-6 py-2.5 rounded-full mx-4"
+            className="bg-primary text-white px-6 py-2.5 rounded-full mx-4"
           >
             Contact Us
           </Link>
-          <button className="bg-slate-50 text-slate-950 px-6 py-2 rounded-full mx-4">
+          <button className="bg-slate-50 text-base-dark px-6 py-2 rounded-full mx-4">
             Learn More
           </button>
         </div>
@@ -82,29 +81,38 @@ const Home: React.FC = () => {
 
       {/* Achievements */}
       <div className="w-full bg-white">
-        <h2 className="text-center text-3xl font-normal uppercase text-slate-800 pt-24">
+        <h2 className="text-center text-3xl font-normal uppercase text-base-dark pt-24">
           Clients We Work With
         </h2>
-        {/* <p className="mx-auto w-5/12 text-center text-slate-700 mt-4 text-sm">
-          We treat our clients like they&#39;re part of the family because we
-          love getting to be creative and work with awesome people, like you.
-        </p> */}
-        <hr className="w-8/12 mx-auto mt-8" />
+
         {/* Clients */}
-        <div className="w-10/12 mx-auto bg-white flex justify-around">
-          <img className="w-2/12" src={LogoClient1} alt="Client 1" />
-          <img className="w-2/12" src={LogoClient2} alt="Client 2" />
-          <img className="w-2/12" src={LogoClient4} alt="Client 4" />
-          <img className="w-2/12" src={LogoClient5} alt="Client 5" />
+        <hr className="w-8/12 mx-auto mt-8" />
+        <div className="w-full mx-auto flex items-center justify-around">
+          <Slider
+            width="200px"
+            duration={40}
+            pauseOnHover={true}
+            blurBorders={false}
+            blurBorderColor={'#fff'}
+          >
+            {[Partner1, Partner2, Partner3, Partner4, Partner5, Partner6, Partner7, Partner8, Partner9, Partner10, Partner11, Partner12, Partner13, Partner14, Partner15, Partner16, Partner17, Partner18, Partner19, Partner20, Partner21].map(e => {
+              return (<Slider.Slide>
+                <div className="flex justify-center items-center h-full w-full px-12 mt-8">
+                  <img src={e} className="max-w-full max-h-full object-contain" alt={e} />
+                </div>
+              </Slider.Slide>)
+            })}
+          </Slider>
         </div>
+
       </div>
 
       {/* Services */}
       <div className="w-11/12 mx-auto rounded-lg px-12 py-8">
-        <h2 className="text-center text-3xl font-normal uppercase text-slate-800 pt-24">
+        <h2 className="text-center text-3xl font-normal uppercase text-base-dark pt-24">
           Integrated Solutions for Your Digital Needs
         </h2>
-        <p className="mx-auto w-5/12 text-center text-slate-700 mt-4 text-sm">
+        <p className="mx-auto w-5/12 text-center text-base-light mt-4 text-sm">
           From software development to AI implementation,<br />
           our solutions are designed to address the challenges of modern business
         </p>
@@ -175,32 +183,22 @@ const Home: React.FC = () => {
         <p className="text-sm font-light text-slate-100 mt-2 w-6/12">
           Share your vision with us, whether it's a groundbreaking concept or a small improvement. Let's make it happen!
         </p>
-        <button className="bg-slate-50 text-slate-950 px-6 py-2 rounded-xl mt-5">
+        <button className="bg-slate-50 text-base-dark px-6 py-2 rounded-xl mt-5">
           Learn More
         </button>
       </div>
 
       {/* Articles */}
-      <div className="w-full">
-        <h2 className="text-center text-3xl font-normal uppercase text-slate-800 pt-24">
+      <div className="w-full py-8">
+        <h2 className="text-center text-3xl font-normal uppercase text-base-dark pt-24">
           WHAT'S NEW?
         </h2>
-        <p className="mx-auto w-5/12 text-center text-slate-700 mt-4 text-sm">
+        <p className="mx-auto w-5/12 text-center text-base-light mt-4 text-sm">
           Discover the latest insights and updates. From industry trends to company news, <br />
           our blog keeps you informed and inspired.
         </p>
-        <div className="flex flex-wrap justify-between w-10/12 mx-auto bg-slate-50">
-          {keyArticle.length > 0 &&
-            keyArticle.map((key) => (
-              <BlogCard
-                key={key}
-                title={dataArt[key].title}
-                tag={dataArt[key].tag}
-                imgArt={dataArt[key].image}
-                desc={dataArt[key].desc}
-                dateTime={key}
-              />
-            ))}
+        <div className="flex flex-wrap justify-between w-10/12 mx-auto">
+        <MiniBlog />
         </div>
       </div>
     </div>

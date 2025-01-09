@@ -1,4 +1,4 @@
-import { Agile, Desc1,Desc2,Desc3,Desc4,Desc5,Desc6 } from "../../assets/images";
+import { Agile, Desc1,Desc2,Desc3,Desc4,Desc5,Desc6, Props1, Props2 } from "../../assets/images";
 import DescriptionCard from "../organisms/DescriptionCard";
 import { FaReact, FaAws, FaCss3Alt, FaFlutter, FaAndroid, FaPhp, FaAngular, FaSwift, FaPython, FaJava, FaVuejs } from "react-icons/fa6";
 import { BiLogoPostgresql, BiLogoFirebase, BiLogoMongodb } from "react-icons/bi";
@@ -9,7 +9,7 @@ const Service = () => {
 
       {/* Scroll Menu */}
       <ul className="flex text-sm justify-center w-11/12 mx-auto py-4 pt-16 items-stretch">
-        <li className="flex-1 px-4 py-2 border-b-2 border-sky-800 text-sky-800 flex justify-center items-center text-center font-semibold"><a>Custom Software</a></li>
+        <li className="flex-1 px-4 py-2 border-b-2 border-primary text-primary flex justify-center items-center text-center font-semibold"><a>Custom Software</a></li>
         <li className="flex-1 px-4 py-2 border-b border-opacity-50 border-slate-600 text-slate-600 flex justify-center items-center text-center"><a>Document Management System</a></li>
         <li className="flex-1 px-4 py-2 border-b border-opacity-50 border-slate-600 text-slate-600 flex justify-center items-center text-center"><a>IoT Installation</a></li>
         <li className="flex-1 px-4 py-2 border-b border-opacity-50 border-slate-600 text-slate-600 flex justify-center items-center text-center"><a>License Product Procurement</a></li>
@@ -18,12 +18,14 @@ const Service = () => {
       </ul>
 
       {/* Hero Image */}
-      <div className="w-full pt-32 pb-8 h-96">
+      <div className="w-full pt-16 pb-16 h-96 relative">
         <div className="w-10/12 mx-auto text-center">
-          <h1 className="text-sky-900 font-semibold">Custom Software</h1>
+          <h1 className="text-primary font-semibold">Custom Software</h1>
           <h1 className="text-4xl font-bold mt-2">Building Your Vision with <br />Expertise You Can Trust</h1>
           <p className="text-slate-700 text-sm mt-4 w-7/12 mx-auto tracking-wide">Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.</p>
         </div>
+        <img className="absolute -bottom-24 left-32 -z-10" src={Props1} />
+        <img className="absolute top-0 right-10 -z-10" src={Props2} />
       </div>
 
       {/* Service Detail */}

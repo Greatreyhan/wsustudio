@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { signIn, user, errorMessage } = useFirebase();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     await signIn(email, password);
   };
@@ -24,7 +24,7 @@ const Login = () => {
 
           <div className="flex flex-col justify-center px-8 pt-8 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
             <p className="text-3xl text-center">Welcome.</p>
-            <p className="text-xs text-center text-red-500">{errorMessage.message ?? ""}</p>
+            <p className="text-xs text-center text-red-500">{errorMessage}</p>
             <form
               onSubmit={handleSubmit}
               className="flex flex-col pt-3 md:pt-8"
@@ -48,6 +48,7 @@ const Login = () => {
                     type="email"
                     placeholder="Email"
                     value={email}
+                    required={true}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -71,13 +72,14 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                     value={password}
+                    required={true}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
               <button
                 type="submit"
-                className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-sky-800 shadow-lg hover:shadow-none hover:bg-blue-900 focus:outline-none focus:ring-2"
+                className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-primary shadow-lg hover:shadow-none hover:bg-primary focus:outline-none focus:ring-2"
               >
                 <span className="w-full">Login</span>
               </button>

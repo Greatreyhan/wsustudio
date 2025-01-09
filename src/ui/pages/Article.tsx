@@ -25,7 +25,7 @@ const Article: React.FC = () => {
     if (!id) return; // Prevent running if `id` is undefined
 
     // Fetch data from Firebase
-    const dbRef = rtdbref(FIREBASE_DB, "data/" + id);
+    const dbRef = rtdbref(FIREBASE_DB, "article/" + id);
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {

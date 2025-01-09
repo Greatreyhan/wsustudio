@@ -70,7 +70,7 @@ class MyUploadAdapter {
   }
 }
 
-const EditorAdmin: React.FC = () => {
+const AdminEditor: React.FC = () => {
   const navi = useNavigate();
   const { id } = useParams<Params>();
   const [dataEdit, setDataEdit] = useState<string>("");
@@ -258,4 +258,4 @@ const EditorAdmin: React.FC = () => {
   );
 };
 
-export default EditorAdmin;
+export default AdminEditor;

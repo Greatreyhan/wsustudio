@@ -50,7 +50,7 @@ const Admin: React.FC = () => {
       {/* Display Number of Articles */}
       <div className="w-4/12 bg-slate-100 px-8 py-4 rounded-md">
         <h2 className="text-lg text-slate-900">Total Artikel</h2>
-        <p className="text-4xl text-sky-900 flex justify-end items-end mt-4 font-bold">
+        <p className="text-4xl text-primary flex justify-end items-end mt-4 font-bold">
           {keyArticle.length}
           <span className="text-sm font-light ml-2">artikel</span>
         </p>
@@ -59,7 +59,7 @@ const Admin: React.FC = () => {
       {/* Display Number of Portfolios */}
       <div className="w-4/12 bg-slate-100 px-8 py-4 rounded-md">
         <h2 className="text-lg text-slate-900">Total Portofolio</h2>
-        <p className="text-4xl text-sky-900 flex justify-end items-end mt-4 font-bold">
+        <p className="text-4xl text-primary flex justify-end items-end mt-4 font-bold">
           {keyPorto.length}
           <span className="text-sm font-light ml-2">portofolio</span>
         </p>

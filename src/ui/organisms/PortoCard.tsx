@@ -26,7 +26,7 @@ const PortoCard: React.FC<PortoCardProps> = ({ id, title, type, pict, desc }) =>
       <p className="font-normal mt-4 mx-4 text-xs tracking-wide leading-5">
         {desc.length > 200 ? desc.substring(0, 200) + '...' : desc}
       </p>
-      <span className="mt-2 mx-4 bg-sky-100 px-4 py-1.5 rounded-full text-sky-900 font-medium text-sm inline-block">
+      <span className="mt-2 mx-4 bg-sky-100 px-4 py-1.5 rounded-full text-primary font-medium text-sm inline-block">
         {type}
       </span>
     </Link>

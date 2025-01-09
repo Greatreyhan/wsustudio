@@ -36,7 +36,7 @@ const Navigation: React.FC = () => {
             { to: '/about', label: 'About Us' },
           ].map((item) => (
               <Link
-                className={`ml-10 text-sm hover:text-sky-800 text-slate-950 ${location.pathname === item.to ? 'font-bold' : ''
+                className={`ml-10 text-sm hover:text-primary text-slate-950 ${location.pathname === item.to ? 'font-bold' : ''
                   }`}
                 to={item.to}
               >
@@ -47,7 +47,7 @@ const Navigation: React.FC = () => {
         <div className="mr-8">
           <a
             href="#"
-            className="text-sky-900 border-sky-900 border hover:bg-sky-800 hover:text-white px-6 py-2 text-sm rounded-xl"
+            className="text-primary border-primary border hover:bg-primary hover:text-white px-6 py-2 text-sm rounded-xl"
           >
             Contact Us
           </a>
