@@ -38,6 +38,10 @@ const AdminCareer: React.FC = () => {
       });
   };
 
+  const truncateText = (text:string, limit:number) => {
+    return text?.length > limit ? `${text.slice(0, limit)}...` : text;
+  };
+
   return (
     <div className="w-10/12 mx-auto pt-8">
       <div className="flex items-center justify-between py-8">
@@ -54,7 +58,7 @@ const AdminCareer: React.FC = () => {
           <thead>
             <tr>
               <th className="border p-4 font-normal text-gray-900">#</th>
-              <th className="border p-4 font-normal text-gray-900">ID</th>
+              {/* <th className="border p-4 font-normal text-gray-900">ID</th> */}
               <th className="border p-4 font-normal text-gray-900">Title</th>
               <th className="border p-4 font-normal text-gray-900">Description</th>
               <th className="border p-4 font-normal text-gray-900">Link</th>
@@ -65,9 +69,9 @@ const AdminCareer: React.FC = () => {
             {careerKeys.map((key, i) => (
               <tr key={key} className="text-gray-700">
                 <td className="border p-4">{i + 1}</td>
-                <td className="border p-4">{key}</td>
+                {/* <td className="border p-4">{key}</td> */}
                 <td className="border p-4">{careers[key]?.title}</td>
-                <td className="border p-4">{careers[key]?.description}</td>
+                <td className="border p-4">{truncateText(careers[key]?.description,50)}</td>
                 <td className="border p-4">
                   <a
                     href={careers[key]?.link}

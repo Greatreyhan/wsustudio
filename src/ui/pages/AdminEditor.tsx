@@ -215,7 +215,7 @@ const AdminEditor: React.FC = () => {
             </label>
             <textarea
               className="px-2 py-1 border-b-2 border-blue-950 w-80"
-              maxLength={200}
+              
               required
               value={descArt}
               onChange={(e) => setDescArt(e.target.value)}

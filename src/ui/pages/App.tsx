@@ -22,7 +22,6 @@ import AdminServiceEditor from './ui/pages/AdminServiceEditor';
 import AdminSubservice from './ui/pages/AdminSubservice';
 import AdminSubserviceEditor from './ui/pages/AdminSubserviceEditor';
 import AdminClientEditor from './ui/pages/AdminClientEditor';
-import AdminClient from './ui/pages/AdminClient';
 
 function App() {
 
@@ -61,7 +60,6 @@ function App() {
     { path: "/admin/service/:serviceId/subservice/:id", element: <AdminSubserviceEditor />, type: "admin" },
     { path: "/admin/client/add", element: <AdminClientEditor />, type: "admin" },
     { path: "/admin/client/:id", element: <AdminClientEditor />, type: "admin" },
-    { path: "/admin/client", element: <AdminClient />, type: "admin" },
     { path: "/editor", element: <Editor />, type: "admin" },
     { path: "/admin", element: <Admin />, type: "admin" },
     { path: "/editor/:id", element: <AdminEditor />, type: "admin" },

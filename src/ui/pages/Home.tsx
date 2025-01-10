@@ -9,37 +9,71 @@ import {
   IconService6,
 } from "../../assets/icons";
 import { HeroHome, Partner1, Partner2, Partner3, Partner4, Partner5, Partner6, Partner7, Partner8, Partner9, Partner10, Partner11, Partner12, Partner13, Partner14, Partner15, Partner16, Partner17, Partner18, Partner19, Partner20, Partner21, Service1, Service2, Service3, Service4, Service5, Service6 } from "../../assets/images";
-import { BlogCard, ServiceCard } from "../organisms";
+import { ServiceCard } from "../organisms";
 import { onValue, ref as rtdbref } from "firebase/database";
 import { FIREBASE_DB } from "../../config/firebaseinit";
 import Slider from 'react-infinite-logo-slider'
 import MiniBlog from "../organisms/MiniBlog";
 
-
-interface ArticleData {
+interface SubserviceItem {
+  id: string;
+  type: string;
+  service: string;
   title: string;
-  tag: string;
+  subtitle: string;
+  description: string;
   image: string;
-  desc: string;
 }
 
+interface ServiceItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  icon: string;
+  subservice: SubserviceItem[];
+}
+
+const transformData = (data: Record<string, any>): ServiceItem[] => {
+  return Object.entries(data).map(([key, value]) => ({
+    id: key,
+    title: value.title,
+    subtitle: value.subtitle,
+    description: value.description,
+    image: value.image,
+    icon: value.icon,
+    subservice: value.subservice
+      ? Object.entries(value.subservice).map(([subKey, subValue]) => {
+          const subService = subValue as SubserviceItem; // Explicitly type 'subValue'
+          return {
+            id: subKey,
+            type: subService.type,
+            service: value.title,
+            title: subService.title,
+            subtitle: subService.subtitle,
+            description: subService.description,
+            image: subService.image,
+          };
+        })
+      : [],
+  }));
+};
+
 const Home: React.FC = () => {
-  const [dataArt, setDataArt] = useState<Record<string, ArticleData>>({});
-  const [keyArticle, setKeyArticle] = useState<string[]>([]);
+  const [serviceData, setServiceData] = useState<ServiceItem[]>([]);
 
   useEffect(() => {
-    const fetchArticles = () => {
-      onValue(rtdbref(FIREBASE_DB, "data"), (snapshot) => {
-        const data = snapshot.val() as Record<string, ArticleData> | null;
-        if (data) {
-          const keys = Object.keys(data);
-          setKeyArticle(keys.slice(-3)); // Get the last 3 articles
-          setDataArt(data);
-        }
-      });
-    };
+    const serviceRef = rtdbref(FIREBASE_DB, "service");
+    const unsubscribe = onValue(serviceRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const transformedData = transformData(data);
+        setServiceData(transformedData);
+      }
+    });
 
-    fetchArticles();
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -119,57 +153,8 @@ const Home: React.FC = () => {
         <hr className="w-8/12 mx-auto mt-8" />
 
         <div className="flex flex-wrap">
-          {[
-            {
-              type: "left",
-              title: "Custom Software",
-              description: "WSU focuses on developing custom software solutions, including website and mobile app creation. We are also experienced in delivering data processing solutions and designing interactive dashboards that provide valuable insights to support your business strategies.",
-              to: "/portofolio",
-              image: Service1,
-              icon: IconService1
-            },
-            {
-              type: "right",
-              title: "Document Management System",
-              description: "Unlock efficiency with smarter document handling. Say goodbye to cluttered files and endless searches—our Document Management System streamlines workflows, enhances collaboration, and ensures secure. Our DMS is designed   to simplify document handling, so your team can focus on what matters most.",
-              to: "/portofolio",
-              image: Service2,
-              icon: IconService2
-            },
-            {
-              type: "left",
-              title: "IoT Installation",
-              description: "Transform your operations with connected intelligence. IoT solutions bridge the gap between the physical and digital worlds, providing actionable insights that optimize performance, reduce downtime, and enable seamless automation in real-time.",
-              to: "/portofolio",
-              image: Service3,
-              icon: IconService3
-            },
-            {
-              type: "right",
-              title: "Product License Procurement",
-              description: "Simplify your licensing needs with our one-door solution. We act as your trusted bridge, providing the right licensed products tailored to your requests. From sourcing to procurement, we ensure a seamless process, so you can focus on your core business while we handle the rest.",
-              to: "/portofolio",
-              image: Service4,
-              icon: IconService4
-            },
-            {
-              type: "left",
-              title: "Digital Marketing",
-              description: "Boost your online presence with data-driven strategies that deliver measurable results. Our strategies are designed to boost your brand visibility, drive targeted traffic, and convert leads into loyal customers in a rapidly evolving online landscape. From content creation to campaign execution, we help you connect with the right audience and grow your digital footprint. ",
-              to: "/portofolio",
-              image: Service5,
-              icon: IconService5
-            },
-            {
-              type: "right",
-              title: "AI Implementation",
-              description: "Revolutionize your business with intelligent automation. From predictive analytics to smart decision-making, AI turns data into actionable insights, helping you stay ahead of the competition and create unparalleled value for your clients.",
-              to: "/portofolio",
-              image: Service6,
-              icon: IconService6
-            },
-          ].map(e => {
-            return (<ServiceCard type={e.type} title={e.title} description={e.description} to={e.to} image={e.image} icon={e.icon} />)
+          {serviceData?.map((e,i) => {
+            return (<ServiceCard type={i%2==0?"right":"left"} title={e.title} description={e.description} to={`service/${e.id}`} image={e.image} icon={e.icon} />)
           })}
 
         </div>

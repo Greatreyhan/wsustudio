@@ -4,137 +4,113 @@ import { BiLogoPostgresql, BiLogoFirebase, BiLogoMongodb } from "react-icons/bi"
 import SubService from "../molecules/SubService";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
+import { onValue, ref as rtdbref } from "firebase/database";
+import { FIREBASE_DB } from "../../config/firebaseinit";
+import { useEffect, useState } from "react";
 
-import { Desc1,Desc2,Desc3,Desc4,Desc5,Desc6 } from "../../assets/images";
-
-const services = [
-  { id: "1", 
-    title: "Custom Software", 
-    subtitle: "Building Your Vision with Expertise You Can Trust",
-    description: "Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.",
-    icon : "test",
-    image : "test"
-  },
-  { id: "2", 
-    title: "Document Management System", 
-    subtitle: "Building Your Vision with Expertise You Can Trust",
-    description: "Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.",
-    icon : "test",
-    image : "test"
-  },
-  { id: "3", 
-    title: "IoT Installation", 
-    subtitle: "Building Your Vision with Expertise You Can Trust",
-    description: "Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.",
-    icon : "test",
-    image : "test"
-  },
-  { id: "4", 
-    title: "License Product Procurement", 
-    subtitle: "Building Your Vision with Expertise You Can Trust",
-    description: "Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.",
-    icon : "test",
-    image : "test"
-  },
-  { id: "5", 
-    title: "Digital Marketing", 
-    subtitle: "Building Your Vision with Expertise You Can Trust",
-    description: "Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.",
-    icon : "test",
-    image : "test"
-  },
-  { id: "6", 
-    title: "AI Implementation", 
-    subtitle: "Building Your Vision with Expertise You Can Trust",
-    description: "Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.",
-    icon : "test",
-    image : "test"
-  },
-];
-
-const subservice = {
-  id: "1",
-  title: "Custom Software",
-  subtitle: "Building Your Vision with Expertise You Can Trust",
-  description: "Work with PT Widya Solusi Utama's expert team of developers and designers to build custom web, mobile, and enterprise solutions. Powered by Agile methods and years of experience, we deliver quality software that evolves with your business needs.",
-  data : [
-    {
-      type: "left",
-      title: "Web Application Development",
-      subtitle: "Transform your business with dynamic, responsive, and user-friendly web applications.",
-      description: "We create scalable and secure web solutions that adapt to your business needs, from robust enterprise platforms to intuitive client-facing portals. Using the latest web technologies, we ensure your web applications deliver excellent performance and seamless user experiences across devices.",
-      image: Desc1,
-    },
-    {
-      type: "right",
-      title: "Mobile Application Development",
-      subtitle: "Stay ahead in the digital era with custom mobile apps tailored to your audience.",
-      description: "Our team develops native and cross-platform mobile applications designed to provide fast, engaging, and intuitive experiences. Whether for iOS, Android, or both, we ensure your apps run smoothly while meeting high standards for functionality, design, and user satisfaction.",
-      image: Desc2,
-    },
-    {
-      type: "left",
-      title: "Integration Services",
-      subtitle: "Seamless Integration, Simplified Solutions",
-      description: "Streamline your operations with seamless system connectivity. Our integration solutions connect applications, platforms, and data sources, ensuring smooth workflows and real-time communication. From API integration to automating complex processes, we tailor strategies to unify your systems, reduce inefficiencies, and enhance decision-making—all while supporting your business goals.",
-      image: Desc3,
-    },
-    {
-      type: "right",
-      title: "Enterprise System Development",
-      subtitle: "Streamlining your business with tailored enterprise solutions",
-      description: "Simplify and improve your business processes with systems designed just for you. Whether it's ERP (Enterprise Resource Planning) to streamline operations and manage resources, or CMS (Content Management Systems) to make handling content effortless, we create solutions that fit your needs. Our goal is to help your team work smarter, stay organized, and focus on what matters most.",
-      image: Desc4,
-    },
-    {
-      type: "left",
-      title: "Dashboard Solutions",
-      subtitle: "Make smarter decisions with powerful, interactive dashboards.",
-      description: "We design visually impactful dashboards that consolidate your data into meaningful insights. Our solutions are tailored to your KPIs, enabling real-time analytics and reporting so you can track performance and make informed decisions effortlessly.",
-      image: Desc5,
-    },
-    {
-      type: "right",
-      title: "Data Engineering",
-      subtitle: "Unlock the power of data for your business.",
-      description: "Transform raw data into actionable insights. Our data engineering solutions focus on building scalable data pipelines, optimizing data storage, and ensuring seamless integration across your systems. Empower your business with reliable, real-time data to make smarter decisions and drive growth.",
-      image: Desc6,
-    },
-  ]
+interface SubserviceItem {
+  id: string;
+  type: string;
+  service: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
 }
 
+interface ServiceItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  icon: string;
+  subservice: SubserviceItem[];
+}
+
+const transformData = (data: Record<string, any>): ServiceItem[] => {
+  return Object.entries(data).map(([key, value]) => ({
+    id: key,
+    title: value.title,
+    subtitle: value.subtitle,
+    description: value.description,
+    image: value.image,
+    icon: value.icon,
+    subservice: value.subservice
+      ? Object.entries(value.subservice).map(([subKey, subValue]) => {
+          const subService = subValue as SubserviceItem; // Explicitly type 'subValue'
+          return {
+            id: subKey,
+            type: subService.type,
+            service: value.title,
+            title: subService.title,
+            subtitle: subService.subtitle,
+            description: subService.description,
+            image: subService.image,
+          };
+        })
+      : [],
+  }));
+};
 
 const Service = () => {
-  const {serviceId} = useParams();
+  const { serviceId } = useParams<{ serviceId: string }>();
+  const [selectedService, setSelectedService] = useState<string>("");
+  const [serviceData, setServiceData] = useState<ServiceItem[]>([]);
+
+  useEffect(() => {
+    const serviceRef = rtdbref(FIREBASE_DB, "service");
+    const unsubscribe = onValue(serviceRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const transformedData = transformData(data);
+        setServiceData(transformedData);
+        setSelectedService(serviceId || transformedData[0]?.id || "");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [serviceId]);
+
+  const currentService = serviceData.find((service) => service.id === selectedService);
 
   return (
     <div>
-
       {/* Sub Service */}
       <div>
         {/* Scroll Menu */}
         <ul className="flex text-sm justify-center w-11/12 mx-auto py-4 pt-16 items-stretch">
-          {services.map((service) => (
+          {serviceData.map((e) => (
             <li
-              key={service.id}
-              className={`flex-1 px-4 py-2 ${serviceId == service.id
-                ? "border-b-2 border-primary text-primary font-semibold"
-                : "border-b border-opacity-50 border-slate-600 text-slate-600"
-                } flex justify-center items-center text-center`}
+              key={e.id}
+              className={`flex-1 px-4 py-2 ${
+                selectedService === e.id
+                  ? "border-b-2 border-primary text-primary font-semibold"
+                  : "border-b border-opacity-50 border-slate-600 text-slate-600"
+              } flex justify-center items-center text-center`}
             >
-              <Link to={`/service/${service.id}`}>{service.title}</Link>
+              <Link to={`/service/${e.id}`} onClick={() => setSelectedService(e.id)}>
+                {e.title}
+              </Link>
             </li>
           ))}
         </ul>
 
         {/* Service Detail */}
-        <SubService id={subservice.id} title={subservice.title} subtitle={subservice.subtitle} description={subservice.description} data={subservice.data} />
+        {currentService && (
+          <SubService
+            id={currentService.id}
+            title={currentService.title}
+            subtitle={currentService.subtitle}
+            description={currentService.description}
+            data={currentService.subservice}
+          />
+        )}
       </div>
 
       {/* Methodology */}
       <div className="bg-base-dark w-10/12 mx-auto mt-16 p-14 rounded-3xl">
         <div className="flex justify-between">
-
           <div className="flex-1">
             <h3 className="text-3xl text-white font-semibold mb-8">
               Development Methodology
@@ -149,16 +125,17 @@ const Service = () => {
             </ul>
           </div>
           <div className="flex-1 flex justify-center items-center">
-            <img src={Agile} />
+            <img src={Agile} alt="Scrum Agile Methodology" />
           </div>
         </div>
-
       </div>
 
       {/* Technology Stack */}
       <div className="w-full text-center py-14 mt-8">
         <h2 className="text-4xl font-medium text-base-dark">Technology Stack</h2>
-        <p className="text-sm font-light text-base-dark mt-2 w-4/12 mx-auto">Our Technology Stack utilizes the latest tools and platforms to deliver efficient, reliable, and scalable services. From front-end to back-end, we cover all your business needs.</p>
+        <p className="text-sm font-light text-base-dark mt-2 w-4/12 mx-auto">
+          Our Technology Stack utilizes the latest tools and platforms to deliver efficient, reliable, and scalable services. From front-end to back-end, we cover all your business needs.
+        </p>
 
         <div className="flex flex-wrap w-10/12 justify-around items-center gap-y-8 mx-auto mt-8">
           <FaReact className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
@@ -177,9 +154,8 @@ const Service = () => {
           <FaVuejs className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
         </div>
       </div>
-
     </div>
   );
-}
+};
 
 export default Service;

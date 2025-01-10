@@ -210,7 +210,7 @@ const Editor: React.FC = () => {
             onChange={(e) => setDescArt(e.target.value)}
             className="px-2 py-1 border-b-2 border-blue-950 w-80"
             placeholder="Desc Artikel"
-            maxLength={200}
+            
             required
           ></textarea>
 

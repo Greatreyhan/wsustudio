@@ -212,7 +212,7 @@ const AdminPortofolioEditor: React.FC = () => {
                         </label>
                         <textarea
                             className="px-2 py-1 border-b-2 border-sky-950 w-full"
-                            maxLength={200}
+                            
                             required
                             value={description}
                             onChange={(e) => setDescription(e.currentTarget.value)}

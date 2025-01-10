@@ -1,7 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdArrowOutward } from 'react-icons/md'
+import { onValue, ref as rtdbref } from "firebase/database";
+import { FIREBASE_DB } from "../../config/firebaseinit";
+
+interface CareerItem {
+    id: string;
+    title: string;
+    description: string;
+    link: string;
+  }
 
 const Career = () => {
+    const [careers, setCareers] = useState<Record<string, CareerItem>>({});
+    const [careerKeys, setCareerKeys] = useState<string[]>([]);
+
+    useEffect(() => {
+        onValue(rtdbref(FIREBASE_DB, "career"), (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            const keys = Object.keys(data);
+            setCareerKeys(keys);
+            setCareers(data);
+          }
+        });
+      }, []);
+
     return (
         <div className='bg-slate-50 pb-8 '>
             {/* Job Vacancy */}
@@ -13,18 +36,14 @@ const Career = () => {
                     </p>
                 </div>
                 <div className="flex-1 flex flex-col gap-y-2">
-                    {[
-                        { id: "1", title: "WSU Studio Academy", description: "lorem", link: "#" },
-                        { id: "2", title: "Design", description: "lorem", link: "#" },
-                        { id: "3", title: "Engineering", description: "lorem", link: "#" },
-                        { id: "4", title: "Finance & Legal", description: "lorem", link: "#" }].map(
-                            (e) => (
+                    {careerKeys?.map(
+                            (key) => (
                                 <a
-                                    key={e.id}
-                                    href={e.link}
+                                    key={careers[key]?.id}
+                                    href={careers[key]?.link}
                                     className="flex bg-white rounded-full px-6 py-3 items-center text-base-dark cursor-pointer hover:text-white hover:bg-primary justify-between"
                                 >
-                                    <span>{e.title}</span>
+                                    <span>{careers[key]?.title}</span>
                                     <MdArrowOutward className="text-xl" />
                                 </a>
                             )
