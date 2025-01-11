@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { BiSave } from "react-icons/bi";
-import { handleUpload } from "../../utils/ImageUploader";
 import { useFirebase } from "../../utils/FirebaseContext";
 import { Service, Subservice } from "../interface/Service";
 
 const AdminServiceEditor: React.FC = () => {
-    const {getFromDatabase, saveToDatabase} = useFirebase();
+    const { getFromDatabase, saveToDatabase, uploadImage } = useFirebase();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [title, setTitle] = useState<string>("");
@@ -71,14 +70,14 @@ const AdminServiceEditor: React.FC = () => {
                         <div className="loader"></div>
                     </div>
                 )}
-                <form className="w-10/12 flex flex-col mx-auto my-8 justify-around items-center">
+                <form className="w-10/12 flex flex-col mx-auto my-8 justify-around items-center" onSubmit={handleSendData}>
                     <div className="flex flex-col w-full">
                         <label className="mt-4 text-xs my-2" htmlFor="title">
                             Judul
                         </label>
                         <input
                             className="px-2 py-1 border-b-2 border-base-dark w-full"
-                            required
+                            required={true}
                             value={title}
                             onChange={(e) => setTitle(e.currentTarget.value)}
                             name="title"
@@ -93,7 +92,7 @@ const AdminServiceEditor: React.FC = () => {
                         </label>
                         <input
                             className="px-2 py-1 border-b-2 border-base-dark w-full"
-                            required
+                            required={true}
                             value={subtitle}
                             onChange={(e) => setSubtitle(e.currentTarget.value)}
                             name="subtitle"
@@ -108,7 +107,7 @@ const AdminServiceEditor: React.FC = () => {
                         </label>
                         <textarea
                             className="px-2 py-1 border-b-2 border-base-dark w-full"
-                            required
+                            required={true}
                             value={description}
                             onChange={(e) => setDescription(e.currentTarget.value)}
                             name="description"
@@ -127,8 +126,8 @@ const AdminServiceEditor: React.FC = () => {
                                 </a>
                             )}
                             <input
-                                required
-                                onChange={(e)=>handleUpload(e,setImage)}
+                                required={true}
+                                onChange={(e) => uploadImage(e, setImage)}
                                 name="image"
                                 id="image"
                                 type="file"
@@ -146,8 +145,8 @@ const AdminServiceEditor: React.FC = () => {
                                 </a>
                             )}
                             <input
-                                required
-                                onChange={(e)=>handleUpload(e,setIcon)}
+                                required={true}
+                                onChange={(e) => uploadImage(e, setIcon)}
                                 name="icon"
                                 id="icon"
                                 type="file"
@@ -162,7 +161,7 @@ const AdminServiceEditor: React.FC = () => {
                             Kembali
                         </Link>
                         <button
-                            onClick={handleSendData}
+                            type="submit"
                             className="mt-4 px-6 py-2 inline-flex justify-center items-center bg-primary rounded-full text-white font-semibold"
                         >
                             <BiSave className="mr-2" />

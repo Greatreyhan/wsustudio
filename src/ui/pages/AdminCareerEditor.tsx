@@ -48,14 +48,14 @@ const AdminCareerEditor: React.FC = () => {
     return (
         <div className="App overflow-x-hidden">
             <div className="pt-16">
-                <form className="w-10/12 flex flex-col mx-auto my-8 justify-around items-center">
+                <form className="w-10/12 flex flex-col mx-auto my-8 justify-around items-center" onSubmit={handleSendData}>
                     <div className="flex flex-col w-full">
                         <label className="mt-4 text-xs my-2" htmlFor="title">
                             Judul
                         </label>
                         <input
                             className="px-2 py-1 border-b-2 border-base-dark w-full"
-                            required
+                            required={true}
                             value={title}
                             onChange={(e) => setTitle(e.currentTarget.value)}
                             name="title"
@@ -70,7 +70,7 @@ const AdminCareerEditor: React.FC = () => {
                         </label>
                         <input
                             className="px-2 py-1 border-b-2 border-base-dark w-full"
-                            required
+                            required={true}
                             value={link}
                             onChange={(e) => setLink(e.currentTarget.value)}
                             name="link"
@@ -86,7 +86,7 @@ const AdminCareerEditor: React.FC = () => {
                         <textarea
                             className="px-2 py-1 border-b-2 border-base-dark w-full"
                             
-                            required
+                            required={true}
                             value={description}
                             onChange={(e) => setDescription(e.currentTarget.value)}
                             name="description"
@@ -103,7 +103,7 @@ const AdminCareerEditor: React.FC = () => {
                             Kembali
                         </Link>
                         <button
-                            onClick={handleSendData}
+                            type={"submit"}
                             className="mt-4 px-6 py-2 inline-flex justify-center items-center bg-primary rounded-full text-white font-semibold"
                         >
                             <BiSave className="mr-2" />

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ref as rtdbref, remove } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { useFirebase } from "../../utils/FirebaseContext";
 
@@ -15,17 +13,11 @@ const AdminArticle = () => {
   const {getFromDatabase, deleteFromDatabase } = useFirebase();
   const [dataArticle, setDataArticle] = useState<{ [key: string]: ArticleData }>({});
   const [keyArticle, setKeyArticle] = useState<string[]>([]);
-  const [tagList, setTagList] = useState<string[]>([]);
 
   useEffect(() => {
     getFromDatabase(`article`).then((data) => {
       if (data) {
-        const tagList: string[] = [];
         const key = Object.keys(data);
-        key.map((list) => {
-          tagList.push(data[list].tag);
-        });
-        setTagList(tagList);
         setKeyArticle(key);
         setDataArticle(data);
       }

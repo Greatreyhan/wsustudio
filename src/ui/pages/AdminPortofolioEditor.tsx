@@ -4,10 +4,9 @@ import { BiSave } from "react-icons/bi";
 import { Portofolio } from "../interface/Portofolio";
 import Editor from "../../utils/Editor";
 import { useFirebase } from "../../utils/FirebaseContext";
-import { handleUpload } from "../../utils/ImageUploader";
 
 const AdminPortofolioEditor: React.FC = () => {
-    const {getFromDatabase, saveToDatabase} = useFirebase()
+    const {getFromDatabase, saveToDatabase, uploadImage} = useFirebase()
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [dataEdit, setDataEdit] = useState<string>("");
@@ -69,14 +68,14 @@ const AdminPortofolioEditor: React.FC = () => {
                         <div className="loader"></div>
                     </div>
                 )}
-                <form className="w-10/12 flex flex-col mx-auto my-8 justify-around items-center">
+                <form className="w-10/12 flex flex-col mx-auto my-8 justify-around items-center" onSubmit={handleSendData}>
                     <div className="flex flex-col w-full">
                         <label className="mt-4 text-xs my-2" htmlFor="title">
                             Judul
                         </label>
                         <input
-                            className="px-2 py-1 border-b-2 border-sky-950 w-full"
-                            required
+                            className="px-2 py-1 border-b-2 border-base-dark w-full"
+                            required={true}
                             value={title}
                             onChange={(e) => setTitle(e.currentTarget.value)}
                             name="title"
@@ -90,8 +89,8 @@ const AdminPortofolioEditor: React.FC = () => {
                             Tag
                         </label>
                         <input
-                            className="px-2 py-1 border-b-2 border-sky-950 w-full"
-                            required
+                            className="px-2 py-1 border-b-2 border-base-dark w-full"
+                            required={true}
                             value={tag}
                             onChange={(e) => setTag(e.currentTarget.value)}
                             name="tag"
@@ -105,9 +104,9 @@ const AdminPortofolioEditor: React.FC = () => {
                             Desc
                         </label>
                         <textarea
-                            className="px-2 py-1 border-b-2 border-sky-950 w-full"
+                            className="px-2 py-1 border-b-2 border-base-dark w-full"
                             
-                            required
+                            required={true}
                             value={description}
                             onChange={(e) => setDescription(e.currentTarget.value)}
                             name="description"
@@ -126,8 +125,8 @@ const AdminPortofolioEditor: React.FC = () => {
                                 </a>
                             )}
                             <input
-                                required
-                                onChange={(e)=>handleUpload(e,setImg)}
+                                required={true}
+                                onChange={(e)=>uploadImage(e,setImg)}
                                 name="image"
                                 id="image"
                                 type="file"
@@ -139,14 +138,14 @@ const AdminPortofolioEditor: React.FC = () => {
                     </div>
                     <div className="flex w-full justify-end items-center gap-x-5">
                         <Link
-                            className="mt-4 px-6 py-2 inline-flex justify-center items-center bg-white text-sky-900 border border-sky-800 rounded-full font-semibold"
+                            className="mt-4 px-6 py-2 inline-flex justify-center items-center bg-white text-primary border border-primary rounded-full font-semibold"
                             to="/admin/portofolio"
                         >
                             Kembali
                         </Link>
                         <button
-                            onClick={handleSendData}
-                            className="mt-4 px-6 py-2 inline-flex justify-center items-center bg-sky-900 rounded-full text-white font-semibold"
+                            type="submit"
+                            className="mt-4 px-6 py-2 inline-flex justify-center items-center bg-primary rounded-full text-white font-semibold"
                         >
                             <BiSave className="mr-2" />
                             Save

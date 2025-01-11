@@ -11,6 +11,11 @@ import {
 } from 'firebase/auth';
 import { ref as rtdbRef, set, get, remove } from 'firebase/database';
 
+interface Message{
+    message: string
+    type : string
+}
+
 // Define the context type
 interface FirebaseContextType {
     user: User | null;
@@ -18,11 +23,12 @@ interface FirebaseContextType {
     signIn: (email: string, password: string) => Promise<void>;
     signUp: (email: string, password: string) => Promise<void>;
     signOut: () => Promise<void>;
-    errorMessage: string;
+    message: Message;
+    setMessage : (obj:Message) => void;
     getFromDatabase: (path: string) => Promise<any>;
     saveToDatabase: (path: string, data: any) => Promise<void>;
     deleteFromDatabase: (path: string) => Promise<void>;
-    uploadImage: (e: React.ChangeEvent<HTMLInputElement>) => Promise<string | null>;  // New method signature
+    uploadImage: (e: React.ChangeEvent<HTMLInputElement>, setImage: (value: string) => void) => void;  // New method signature
 }
 
 // Initialize the context
@@ -41,7 +47,7 @@ export const useFirebase = (): FirebaseContextType => {
 export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [message, setMessage]  = useState<Message>({message:"",type:""})
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (authUser) => {
@@ -54,30 +60,29 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     const signIn = async (email: string, password: string): Promise<void> => {
         try {
             await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-            setErrorMessage('');
+            setMessage({message:"Succesfully Log In",type:"info"})
         } catch (err: any) {
-            setErrorMessage(err.message || 'Error signing in');
-            console.error('Error Sign In:', err);
+            setMessage({message:"Error signing in:"+err.message,type:"error"})
+
         }
     };
 
     const signUp = async (email: string, password: string): Promise<void> => {
         try {
             await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
-            setErrorMessage('');
+            setMessage({message:"Succesfully Sign Up",type:"info"})
         } catch (err: any) {
-            setErrorMessage(err.message || 'Error signing up');
-            console.error('Error Sign Up:', err);
+            setMessage({message:"Error signing up :" + err.message,type:"error"})
         }
     };
 
     const signOutUser = async (): Promise<void> => {
         try {
             await signOut(FIREBASE_AUTH);
-            setErrorMessage('');
+            setMessage({message:"Succesfully Sign Out",type:"info"})
         } catch (err: any) {
-            setErrorMessage(err.message || 'Error signing out');
-            console.error('Error Sign Out:', err);
+            setMessage({message:"Error signing out :" + err.message,type:"error"})
+      
         }
     };
 
@@ -87,7 +92,8 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
             const snapshot = await get(dbRef);
             return snapshot.exists() ? snapshot.val() : null;
         } catch (err: any) {
-            console.error('Error fetching data from Firebase:', err);
+            setMessage({message:"Error fetch data :" + err.message,type:"error"})
+
             throw new Error(err.message || 'Error fetching data');
         }
     };
@@ -96,8 +102,9 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         try {
             const dbRef = rtdbRef(FIREBASE_DB, path);
             await set(dbRef, data);
+            setMessage({message:"Succesfully Save Data",type:"info"})
         } catch (err: any) {
-            console.error('Error saving data to Firebase:', err);
+            setMessage({message:"Error saving data :" + err.message,type:"error"})
             throw new Error(err.message || 'Error saving data');
         }
     };
@@ -106,43 +113,35 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         try {
             const recordRef = rtdbRef(FIREBASE_DB, path);
             await remove(recordRef);
-            console.log("Delete success");
-        } catch (error: any) {
-            console.error("Delete failed: ", error.message);
+            setMessage({message:"Succesfully Delete Data",type:"info"})
+        } catch (err: any) {
+            setMessage({message:"Error deleting data :" + err.message,type:"error"})
         }
     };
 
-    const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>): Promise<string | null> => {
+    const uploadImage = (e: React.ChangeEvent<HTMLInputElement>, setImage: (value: string) => void): void => {
         const file = e.target.files?.[0];
         if (file) {
             const storageRef = ref(FIREBASE_STORE, `images/${file.name}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
-    
-            return new Promise((resolve, reject) => {
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress =
-                            Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        console.log("Upload is " + progress + "% done");
-                    },
-                    (error) => {
-                        console.error(error);
-                        reject(error);
-                    },
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref)
-                            .then((downloadURL) => {
-                                resolve(downloadURL);
-                            })
-                            .catch((error) => {
-                                reject(error);
-                            });
-                    }
-                );
-            });
-        } else {
-            return null;
+            setMessage({message:"Uploading image, please wait",type:"waiting"})
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress =
+                    Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    setMessage({message:"Uploading image,"+ progress + "% done",type:"waiting"})
+                },
+                (err) => {
+                    setMessage({message:"Error uploading image :" + err.message,type:"error"})
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        setMessage({message:"Succesfully Upload Image",type:"done"})
+                        setImage(downloadURL);
+                    });
+                }
+            );
         }
     };
     
@@ -153,7 +152,8 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         signIn,
         signUp,
         signOut: signOutUser,
-        errorMessage,
+        message,
+        setMessage,
         getFromDatabase,
         saveToDatabase,
         deleteFromDatabase,
@@ -161,7 +161,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     };
 
     return (
-        <FirebaseContext.Provider value={value}>
+        <FirebaseContext.Provider value={value} >
             {children}
         </FirebaseContext.Provider>
     );
