@@ -79,17 +79,17 @@ const Service = () => {
       {/* Sub Service */}
       <div>
         {/* Scroll Menu */}
-        <ul className="flex text-sm justify-center w-11/12 mx-auto py-4 pt-16 items-stretch">
+        <ul className="flex text-sm  justify-center md:flex-row flex-col w-11/12 mx-auto py-4 pt-16 items-stretch">
           {serviceData.map((e) => (
             <li
               key={e.id}
               className={`flex-1 px-4 py-2 ${
                 selectedService === e.id
-                  ? "border-b-2 border-primary text-primary font-semibold"
-                  : "border-b border-opacity-50 border-slate-600 text-slate-600"
+                  ? "md:border-b-2 md:border-l-0 border-l-2 border-primary text-primary font-semibold"
+                  : "md:border-b md:border-l-0 border-l border-opacity-50 border-slate-600 text-slate-600"
               } flex justify-center items-center text-center`}
             >
-              <Link to={`/service/${e.id}`} onClick={() => setSelectedService(e.id)}>
+              <Link className="md:flex text-sm inline-block justify-start md:justify-center text-left md:text-center w-full" to={`/service/${e.id}`} onClick={() => setSelectedService(e.id)}>
                 {e.title}
               </Link>
             </li>
@@ -109,22 +109,22 @@ const Service = () => {
       </div>
 
       {/* Methodology */}
-      <div className="bg-base-dark w-10/12 mx-auto mt-16 p-14 rounded-3xl">
-        <div className="flex justify-between">
+      <div className="bg-base-dark md:w-10/12 w-11/12 md:text-left text-center mx-auto mt-16 p-14 rounded-3xl">
+        <div className="flex md:flex-row flex-col justify-between">
           <div className="flex-1">
-            <h3 className="text-3xl text-white font-semibold mb-8">
+            <h3 className="md:text-3xl text-2xl text-white font-semibold mb-8">
               Development Methodology
             </h3>
             <p className="text-md font-light text-slate-100 mt-2">
               We use <strong className="font-bold">Scrum Agile</strong>, a collaborative framework designed for:
             </p>
-            <ul className="text-sm font-light text-slate-100 mt-2 list-disc ml-4">
+            <ul className="text-sm font-light text-slate-100 mt-2 text-left list-disc ml-4">
               <li>Adaptive project planning and transparent communication.</li>
               <li>Regular iterations to meet your evolving needs.</li>
               <li>Faster delivery with continuous testing and feedback cycles.</li>
             </ul>
           </div>
-          <div className="flex-1 flex justify-center items-center">
+          <div className="flex-1 mt-8 m:mt-0 flex justify-center items-center">
             <img src={Agile} alt="Scrum Agile Methodology" />
           </div>
         </div>
@@ -132,26 +132,26 @@ const Service = () => {
 
       {/* Technology Stack */}
       <div className="w-full text-center py-14 mt-8">
-        <h2 className="text-4xl font-medium text-base-dark">Technology Stack</h2>
-        <p className="text-sm font-light text-base-dark mt-2 w-4/12 mx-auto">
+        <h2 className="md:text-4xl text-3xl font-medium text-base-dark">Technology Stack</h2>
+        <p className="text-sm font-light text-base-dark mt-2 md:w-4/12 w-11/12 mx-auto">
           Our Technology Stack utilizes the latest tools and platforms to deliver efficient, reliable, and scalable services. From front-end to back-end, we cover all your business needs.
         </p>
 
-        <div className="flex flex-wrap w-10/12 justify-around items-center gap-y-8 mx-auto mt-8">
-          <FaReact className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <BiLogoPostgresql className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaAws className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaCss3Alt className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaFlutter className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <BiLogoFirebase className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaAndroid className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaPhp className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaAngular className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaSwift className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaPython className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <BiLogoMongodb className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaJava className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
-          <FaVuejs className="text-primary-dark text-opacity-80 text-7xl w-36 font-bold" />
+        <div className="flex flex-wrap md:w-10/12 w-11/12 justify-around items-center gap-y-8 mx-auto mt-8">
+          <FaReact className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <BiLogoPostgresql className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaAws className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaCss3Alt className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaFlutter className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <BiLogoFirebase className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaAndroid className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaPhp className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaAngular className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaSwift className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaPython className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <BiLogoMongodb className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaJava className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
+          <FaVuejs className="text-primary-dark text-opacity-80 text-7xl md:w-36 w-24 font-bold" />
         </div>
       </div>
     </div>

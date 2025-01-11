@@ -86,16 +86,16 @@ const Portofolio: React.FC = () => {
       <div className="w-full pt-32 pb-8">
         <div className="w-10/12 mx-auto flex justify-center items-center text-center">
           <div className="flex-1">
-            <h1 className="text-4xl">
+            <h1 className="md:text-4xl text-3xl">
               <span className="text-slate-900 font-bold">DISCOVER OUR WORK</span>
             </h1>
-            <p className="text-slate-700 text-sm mt-4 w-7/12 mx-auto tracking-wide">
+            <p className="text-slate-700 text-sm mt-4 md:w-7/12 w-11/12 mx-auto tracking-wide">
               With years of experience, we transform ideas into impactful solutions. Our portfolio features diverse
               projects—custom software, mobile apps, and integrated systems—crafted to meet each client's unique needs,
               delivering growth and efficiency with precision and creativity. Let our work speak for itself.
             </p>
             <div className="w-full flex justify-center mt-8">
-              <form className="w-6/12">
+              <form className="md:w-6/12 w-10/12">
                 <input
                   value={queryText}
                   onChange={handleQuery}

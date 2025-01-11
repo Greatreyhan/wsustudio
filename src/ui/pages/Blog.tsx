@@ -66,8 +66,8 @@ const Blog: React.FC = () => {
     <div className="w-full mx-auto bg-white overflow-x-hidden">
       {/* Title Section */}
       <div className="w-full text-center pt-32">
-        <h2 className="text-4xl font-medium text-slate-900">Read More Articles</h2>
-        <p className="text-sm font-light text-slate-800 mt-2 w-4/12 mx-auto">
+        <h2 className="md:text-4xl text-3xl font-medium text-slate-900">Read More Articles</h2>
+        <p className="text-sm font-light text-slate-800 mt-2 md:w-4/12 w-10/12 mx-auto">
           Our team group of creative people, consisting of various backgrounds and specific abilities that are divided into several divisions.
         </p>
       </div>
@@ -75,7 +75,7 @@ const Blog: React.FC = () => {
       {/* Search and Tag Filters */}
       <div className="w-10/12 mx-auto flex-col items-center mt-8 justify-center">
         <div className="w-full flex justify-center">
-          <form className="w-6/12">
+          <form className="md:w-6/12 w-10/12">
             <input
               value={queryText}
               onChange={handleQuery}

@@ -15,7 +15,7 @@ const PortoCard: React.FC<PortoCardProps> = ({ id, title, type, pict, desc }) =>
   return (
     <Link
       to={`/portofolio/` + id}
-      className="md:w-80 w-8/12 m-8 pb-8 bg-base-white rounded-lg"
+      className="md:w-80 w-10/12 m-8 pb-8 bg-base-white rounded-lg"
       id={id.toString()}
     >
       <div className="w-full h-48 relative">

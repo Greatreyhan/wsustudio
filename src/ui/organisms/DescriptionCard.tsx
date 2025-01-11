@@ -10,13 +10,13 @@ const DescriptionCard: React.FC<DescriptionCardParams> = ({ type = 'left', title
     if (type === "left") {
         return (
             <div>
-                <div className="flex w-10/12 gap-x-8 mx-auto py-8 items-center">
-                    <div className="flex-1">
+                <div className="flex w-11/12 md:w-10/12 md:flex-row flex-col gap-x-8 mx-auto py-8 items-center">
+                    <div className="flex-1 md:order-1 order-2">
                         <h2 className="mt-4 text-3xl font-semibold text-slate-900">{title}</h2>
                         <p className="mt-2 font-medium text-slate-800">{subtitle}</p>
                         <p className="mt-2 text-sm text-slate-700">{description}</p>
                     </div>
-                    <div className="flex-1 bg-slate-100 flex justify-center items-center rounded-xl">
+                    <div className="flex-1 bg-slate-100 flex justify-center items-center rounded-xl md:order-2 order-1 md:mb-0 mb-4">
                         <img className="rounded-md p-8 w-8/12" src={image} />
                     </div>
                 </div>
@@ -26,13 +26,13 @@ const DescriptionCard: React.FC<DescriptionCardParams> = ({ type = 'left', title
     } else if (type === "right") {
         return (
             <div>
-                <div className="flex w-10/12 gap-x-8 mx-auto py-8 items-center">
+                <div className="flex w-11/12 md:w-10/12 md:flex-row flex-col gap-x-8 mx-auto py-8 items-center">
                     <div className="flex-1 order-2">
                         <h2 className="mt-4 text-3xl font-semibold text-slate-900">{title}</h2>
                         <p className="mt-2 font-medium text-slate-800">{subtitle}</p>
                         <p className="mt-2 text-sm text-slate-700">{description}</p>
                     </div>
-                    <div className="flex-1 order-1 bg-slate-100 flex justify-center items-center rounded-xl">
+                    <div className="flex-1 order-1 bg-slate-100 flex justify-center items-center rounded-xl md:mb-0 mb-4">
                         <img className="rounded-md p-8 w-8/12" src={image} />
                     </div>
                 </div>
