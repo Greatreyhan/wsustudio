@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { onValue, ref as rtdbref } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
-
-interface ArticleData {
-  [key: string]: {
-    tag?: string;
-    [key: string]: any; // Allows for other optional fields
-  };
-}
-
-interface PortfolioData {
-  [key: string]: any; // Define specific fields if available
-}
-
-interface CareerData {
-  [key: string]: any; // Define specific fields if available
-}
-
+import { Article } from "../interface/Article";
+import { Portofolio } from "../interface/Portofolio";
+import { Career } from "../interface/Career";
+import { Service } from "../interface/Service";
+import { Client } from "../interface/Client";
+import { useFirebase } from "../../utils/FirebaseContext";
 
 const Admin: React.FC = () => {
+  const {getFromDatabase} = useFirebase()
   const [keyArticle, setKeyArticle] = useState<string[]>([]);
-  const [tagList, setTagList] = useState<string[]>([]);
   const [keyPorto, setKeyPorto] = useState<string[]>([]);
   const [keyCareer, setKeyCareer] = useState<string[]>([]);
   const [keyClient, setKeyClient] = useState<string[]>([]);
@@ -28,48 +16,46 @@ const Admin: React.FC = () => {
 
   useEffect(() => {
     // Fetch articles
-    onValue(rtdbref(FIREBASE_DB, "article"), (snapshot) => {
-      const data: ArticleData | null = snapshot.val();
-      if (data) {
-        const keys = Object.keys(data);
-        const tags = keys.map((key) => data[key].tag || "");
-        setTagList(tags);
+    getFromDatabase("article").then(data => {
+      const dataConverted: Article | null = data;
+      if (dataConverted) {
+        const keys = Object.keys(dataConverted);
         setKeyArticle(keys);
       }
     });
 
     // Fetch portfolios
-    onValue(rtdbref(FIREBASE_DB, "portofolio"), (snapshot) => {
-      const data: PortfolioData | null = snapshot.val();
-      if (data) {
-        const keys = Object.keys(data);
+    getFromDatabase("portofolio").then(data => {
+      const dataConverted: Portofolio | null = data;
+      if (dataConverted) {
+        const keys = Object.keys(dataConverted);
         setKeyPorto(keys);
       }
     });
 
     // Fetch career
-    onValue(rtdbref(FIREBASE_DB, "career"), (snapshot) => {
-      const data: CareerData | null = snapshot.val();
-      if (data) {
-        const keys = Object.keys(data);
+    getFromDatabase("career").then(data => {
+      const dataConverted: Career | null = data;
+      if (dataConverted) {
+        const keys = Object.keys(dataConverted);
         setKeyCareer(keys);
       }
     });
 
     // Fetch service
-    onValue(rtdbref(FIREBASE_DB, "service"), (snapshot) => {
-      const data: CareerData | null = snapshot.val();
-      if (data) {
-        const keys = Object.keys(data);
+    getFromDatabase("service").then(data => {
+      const dataConverted: Service | null = data;
+      if (dataConverted) {
+        const keys = Object.keys(dataConverted);
         setKeyService(keys);
       }
     });
 
     // Fetch client
-    onValue(rtdbref(FIREBASE_DB, "client"), (snapshot) => {
-      const data: CareerData | null = snapshot.val();
-      if (data) {
-        const keys = Object.keys(data);
+    getFromDatabase("client").then(data => {
+      const dataConverted: Client | null = data;
+      if (dataConverted) {
+        const keys = Object.keys(dataConverted);
         setKeyClient(keys);
       }
     });

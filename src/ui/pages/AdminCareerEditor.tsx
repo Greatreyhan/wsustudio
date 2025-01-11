@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { onValue, ref as rtdbRef, set } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
 import { BiSave } from "react-icons/bi";
+import { Career } from "../interface/Career";
+import { useFirebase } from "../../utils/FirebaseContext";
 
-interface CareerData {
-    title: string;
-    description: string;
-    link: string;
-  }
 
 const AdminCareerEditor: React.FC = () => {
     const navigate = useNavigate();
+    const {getFromDatabase, saveToDatabase} = useFirebase()
     const { id } = useParams<{ id: string }>();
     const [title, setTitle] = useState<string>("");
     const [link, setLink] = useState<string>("");
@@ -21,16 +17,13 @@ const AdminCareerEditor: React.FC = () => {
     const handleSendData = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const timestamp = Date.now();
-        const dbRef = rtdbRef(FIREBASE_DB, `career/${id || timestamp}`);
-
-        const newData: CareerData = {
+        const newData: Career = {
             title,
             link,
             description,
         };
 
-        set(dbRef, newData)
+        saveToDatabase(`career/${id || Date.now()}`, newData)
             .then(() => {
                 navigate("/admin/career");
             })
@@ -41,8 +34,7 @@ const AdminCareerEditor: React.FC = () => {
 
     useEffect(() => {
         if (id) {
-            onValue(rtdbRef(FIREBASE_DB, `career/${id}`), (snapshot) => {
-                const data = snapshot.val() as CareerData | null;
+            getFromDatabase('career/'+id).then(data => {
                 if (data) {
                     setTitle(data.title);
                     setLink(data.link);

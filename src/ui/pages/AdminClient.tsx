@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { onValue, ref as rtdbref, remove } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
 import { Link } from "react-router-dom";
 import { MdEdit, MdDelete } from "react-icons/md";
-import { FaCodeBranch } from "react-icons/fa6";
-
-interface ClientItem {
-  title: string;
-  image: string;
-}
+import { useFirebase } from "../../utils/FirebaseContext";
+import { Client } from "../interface/Client";
 
 const AdminClient: React.FC = () => {
-  const [clients, setClients] = useState<Record<string, ClientItem>>({});
+  const {getFromDatabase, deleteFromDatabase} = useFirebase()
+  const [clients, setClients] = useState<Record<string, Client>>({});
   const [clientKeys, setClientKeys] = useState<string[]>([]);
 
   useEffect(() => {
-    onValue(rtdbref(FIREBASE_DB, "client"), (snapshot) => {
-      const data = snapshot.val();
+    getFromDatabase("client").then(data => {
       if (data) {
         const keys = Object.keys(data);
         setClientKeys(keys);
@@ -24,18 +18,6 @@ const AdminClient: React.FC = () => {
       }
     });
   }, []);
-
-  const handleDeleteClient = (e: React.MouseEvent<HTMLButtonElement>, key: string) => {
-    e.preventDefault();
-    const recordRef = rtdbref(FIREBASE_DB, `client/${key}`);
-    remove(recordRef)
-      .then(() => {
-        console.log("Delete success");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
 
   return (
     <div className="w-10/12 mx-auto pt-8">
@@ -75,7 +57,7 @@ const AdminClient: React.FC = () => {
                   <button
                     className="p-2 text-rose-800 rounded-full bg-rose-100"
                     type="button"
-                    onClick={(e) => handleDeleteClient(e, key)}
+                    onClick={() => deleteFromDatabase("client/"+key)}
                   >
                     <MdDelete />
                   </button>

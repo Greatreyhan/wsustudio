@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { onValue, ref as rtdbRef, set } from "firebase/database";
-import { FIREBASE_STORE, FIREBASE_DB } from "../../config/firebaseinit";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { BiSave } from "react-icons/bi";
-
-interface ClientData {
-    title: string;
-    image: string;
-}
+import { handleUpload } from "../../utils/ImageUploader";
+import { useFirebase } from "../../utils/FirebaseContext";
+import { Client } from "../interface/Client";
 
 const AdminClientEditor: React.FC = () => {
     const navigate = useNavigate();
+    const {getFromDatabase, saveToDatabase} = useFirebase();
     const { id } = useParams<{ id: string }>();
     const [title, setTitle] = useState<string>("");
     const [image, setImage] = useState<string>("");
@@ -26,16 +22,12 @@ const AdminClientEditor: React.FC = () => {
         }
 
         setIsUpload(true);
-
-        const timestamp = Date.now();
-        const dbRef = rtdbRef(FIREBASE_DB, `client/${id || timestamp}`);
-
-        const newData: ClientData = {
+        const newData: Client = {
             title,
             image,
         };
 
-        set(dbRef, newData)
+        saveToDatabase(`client/${id || Date.now()}`, newData)
             .then(() => {
                 setIsUpload(false);
                 navigate("/admin/client");
@@ -46,36 +38,9 @@ const AdminClientEditor: React.FC = () => {
             });
     };
 
-    const handleUploadGambar = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsUpload(true);
-            const file = e.target.files?.[0];
-            if (file) {
-                const storageRef = ref(FIREBASE_STORE, `images/${file.name}`);
-                const uploadTask = uploadBytesResumable(storageRef, file);
-    
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress =
-                            Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        console.log("Upload is " + progress + "% done");
-                    },
-                    (error) => console.error(error),
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            setImage(downloadURL);
-                            setIsUpload(false);
-                        });
-                    }
-                );
-            }
-            setIsUpload(false);
-        };
-
     useEffect(() => {
         if (id) {
-            onValue(rtdbRef(FIREBASE_DB, `client/${id}`), (snapshot) => {
-                const data = snapshot.val() as ClientData | null;
+            getFromDatabase(`client/${id}`).then(data => {
                 if (data) {
                     setTitle(data.title);
                     setImage(data.image)
@@ -121,7 +86,7 @@ const AdminClientEditor: React.FC = () => {
                             )}
                             <input
                                 required
-                                onChange={handleUploadGambar}
+                                onChange={(e)=>handleUpload(e,setImage)}
                                 name="image"
                                 id="image"
                                 type="file"

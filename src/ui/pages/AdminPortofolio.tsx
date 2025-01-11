@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { onValue, ref as rtdbref, remove } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
 import { Link } from "react-router-dom";
 import { MdEdit, MdDelete } from "react-icons/md";
-
-interface PortfolioItem {
-  title: string;
-  tag: string;
-  desc: string;
-}
+import { Portofolio } from "../interface/Portofolio";
+import { useFirebase } from "../../utils/FirebaseContext";
 
 const AdminPortofolio: React.FC = () => {
-  const [dataPorto, setDataPorto] = useState<Record<string, PortfolioItem>>({});
+  const {getFromDatabase, deleteFromDatabase} = useFirebase()
+  const [dataPorto, setDataPorto] = useState<Record<string, Portofolio>>({});
   const [keyPorto, setKeyPorto] = useState<string[]>([]);
 
   useEffect(() => {
-    onValue(rtdbref(FIREBASE_DB, "portofolio"), (snapshot) => {
-      const data = snapshot.val();
+    getFromDatabase("portofolio").then(data => {
       if (data) {
         const keys = Object.keys(data);
         setKeyPorto(keys);
@@ -24,18 +18,6 @@ const AdminPortofolio: React.FC = () => {
       }
     });
   }, []);
-
-  const handleDeletePorto = (e: React.MouseEvent<HTMLButtonElement>, key: string) => {
-    e.preventDefault();
-    const recordRef = rtdbref(FIREBASE_DB, `portofolio/${key}`);
-    remove(recordRef)
-      .then(() => {
-        console.log("delete success");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
 
   return (
     <div className="w-10/12 mx-auto pt-8">
@@ -76,7 +58,7 @@ const AdminPortofolio: React.FC = () => {
                   <button
                     className="p-2 text-rose-800 rounded-full bg-rose-100"
                     type="button"
-                    onClick={(e) => handleDeletePorto(e, key)}
+                    onClick={() => deleteFromDatabase("portofolio/"+key)}
                   >
                     <MdDelete />
                   </button>

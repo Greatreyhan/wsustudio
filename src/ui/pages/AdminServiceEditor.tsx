@@ -1,28 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { onValue, ref as rtdbRef, set } from "firebase/database";
-import { FIREBASE_STORE, FIREBASE_DB } from "../../config/firebaseinit";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { BiSave } from "react-icons/bi";
-
-interface ServiceData {
-    title: string;
-    subtitle: string;
-    description: string;
-    image: string;
-    icon: string;
-    subservice: SubserviceData[]
-}
-
-interface SubserviceData {
-    type: string;
-    title: string;
-    subtitle: string;
-    description: string;
-    image: string;
-}
+import { handleUpload } from "../../utils/ImageUploader";
+import { useFirebase } from "../../utils/FirebaseContext";
+import { Service, Subservice } from "../interface/Service";
 
 const AdminServiceEditor: React.FC = () => {
+    const {getFromDatabase, saveToDatabase} = useFirebase();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [title, setTitle] = useState<string>("");
@@ -31,7 +15,7 @@ const AdminServiceEditor: React.FC = () => {
     const [image, setImage] = useState<string>("");
     const [icon, setIcon] = useState<string>("");
     const [isUpload, setIsUpload] = useState<boolean>(false);
-    const [subservice, setSubservice] = useState<SubserviceData[]>([])
+    const [subservice, setSubservice] = useState<Subservice[]>([])
 
     const handleSendData = (e: React.FormEvent) => {
         e.preventDefault();
@@ -42,11 +26,7 @@ const AdminServiceEditor: React.FC = () => {
         }
 
         setIsUpload(true);
-
-        const timestamp = Date.now();
-        const dbRef = rtdbRef(FIREBASE_DB, `service/${id || timestamp}`);
-
-        const newData: ServiceData = {
+        const newData: Service = {
             title,
             subtitle,
             description,
@@ -55,7 +35,7 @@ const AdminServiceEditor: React.FC = () => {
             subservice
         };
 
-        set(dbRef, newData)
+        saveToDatabase(`service/${id || Date.now()}`, newData)
             .then(() => {
                 setIsUpload(false);
                 navigate("/admin/service");
@@ -66,69 +46,17 @@ const AdminServiceEditor: React.FC = () => {
             });
     };
 
-    const handleUploadGambar = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsUpload(true);
-            const file = e.target.files?.[0];
-            if (file) {
-                const storageRef = ref(FIREBASE_STORE, `images/${file.name}`);
-                const uploadTask = uploadBytesResumable(storageRef, file);
-    
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress =
-                            Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        console.log("Upload is " + progress + "% done");
-                    },
-                    (error) => console.error(error),
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            setImage(downloadURL);
-                            setIsUpload(false);
-                        });
-                    }
-                );
-            }
-            setIsUpload(false);
-        };
-
-        const handleUploadIcon = (e: React.ChangeEvent<HTMLInputElement>) => {
-            setIsUpload(true);
-            const file = e.target.files?.[0];
-            if (file) {
-                const storageRef = ref(FIREBASE_STORE, `images/${file.name}`);
-                const uploadTask = uploadBytesResumable(storageRef, file);
-    
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress =
-                            Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        console.log("Upload is " + progress + "% done");
-                    },
-                    (error) => console.error(error),
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            setIcon(downloadURL);
-                            setIsUpload(false);
-                        });
-                    }
-                );
-            }
-            setIsUpload(false);
-        };
-
     useEffect(() => {
         if (id) {
-            onValue(rtdbRef(FIREBASE_DB, `service/${id}`), (snapshot) => {
-                const data = snapshot.val() as ServiceData | null;
-                if (data) {
-                    setTitle(data.title);
-                    setSubtitle(data.subtitle);
-                    setDescription(data.description);
-                    setImage(data.image)
-                    setIcon(data.icon)
-                    setSubservice(data.subservice)
+            getFromDatabase(`service/${id}`).then(data => {
+                const dataConverted = data as Service | null;
+                if (dataConverted) {
+                    setTitle(dataConverted.title);
+                    setSubtitle(dataConverted.subtitle);
+                    setDescription(dataConverted.description);
+                    setImage(dataConverted.image)
+                    setIcon(dataConverted.icon)
+                    setSubservice(dataConverted.subservice)
                 }
             });
         }
@@ -200,7 +128,7 @@ const AdminServiceEditor: React.FC = () => {
                             )}
                             <input
                                 required
-                                onChange={handleUploadGambar}
+                                onChange={(e)=>handleUpload(e,setImage)}
                                 name="image"
                                 id="image"
                                 type="file"
@@ -219,7 +147,7 @@ const AdminServiceEditor: React.FC = () => {
                             )}
                             <input
                                 required
-                                onChange={handleUploadIcon}
+                                onChange={(e)=>handleUpload(e,setIcon)}
                                 name="icon"
                                 id="icon"
                                 type="file"

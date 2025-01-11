@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { onValue, ref as rtdbRef, set } from "firebase/database";
-import { FIREBASE_STORE, FIREBASE_DB } from "../../config/firebaseinit";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { BiSave } from "react-icons/bi";
-
-interface SubserviceData {
-    type: string;
-    title: string;
-    subtitle: string;
-    description: string;
-    image: string;
-}
+import { Subservice } from "../interface/Service";
+import { handleUpload } from "../../utils/ImageUploader";
+import { useFirebase } from "../../utils/FirebaseContext";
 
 const AdminSubserviceEditor: React.FC = () => {
     const navigate = useNavigate();
+    const {saveToDatabase, getFromDatabase}=useFirebase()
     const { serviceId, id } = useParams<{ serviceId: string; id: string }>();
     const [type, setType] = useState<string>("left");
     const [title, setTitle] = useState<string>("");
@@ -38,10 +31,7 @@ const AdminSubserviceEditor: React.FC = () => {
 
         setIsUpload(true);
 
-        const timestamp = Date.now();
-        const dbRef = rtdbRef(FIREBASE_DB, `service/${serviceId}/subservice/${id || timestamp}`);
-
-        const newData: SubserviceData = {
+        const newData: Subservice = {
             type,
             title,
             subtitle,
@@ -49,7 +39,7 @@ const AdminSubserviceEditor: React.FC = () => {
             image,
         };
 
-        set(dbRef, newData)
+        saveToDatabase(`service/${serviceId}/subservice/${id || Date.now()}`, newData)
             .then(() => {
                 setIsUpload(false);
                 navigate(`/admin/service/${serviceId}/subservice`);
@@ -60,44 +50,17 @@ const AdminSubserviceEditor: React.FC = () => {
             });
     };
 
-    const handleUploadGambar = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsUpload(true);
-        const file = e.target.files?.[0];
-        if (file) {
-            const storageRef = ref(FIREBASE_STORE, `images/${file.name}`);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress =
-                        Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    console.log("Upload is " + progress + "% done");
-                },
-                (error) => console.error(error),
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        setImage(downloadURL);
-                        setIsUpload(false);
-                    });
-                }
-            );
-        }
-        setIsUpload(false);
-    };
-
-
     useEffect(() => {
 
         if (id) {
-            onValue(rtdbRef(FIREBASE_DB, `service/${serviceId}/subservice/${id}`), (snapshot) => {
-                const data = snapshot.val() as SubserviceData | null;
-                if (data) {
-                    setTitle(data.title);
-                    setSubtitle(data.subtitle);
-                    setDescription(data.description);
-                    setImage(data.image)
-                    setType(data.type)
+            getFromDatabase(`service/${serviceId}/subservice/${id}`).then(data => {
+                const dataConverted = data as Subservice | null;
+                if (dataConverted) {
+                    setTitle(dataConverted.title);
+                    setSubtitle(dataConverted.subtitle);
+                    setDescription(dataConverted.description);
+                    setImage(dataConverted.image)
+                    setType(dataConverted.type)
                 }
             });
         }
@@ -185,7 +148,7 @@ const AdminSubserviceEditor: React.FC = () => {
                             )}
                             <input
                                 required
-                                onChange={handleUploadGambar}
+                                onChange={(e)=>handleUpload(e,setImage)}
                                 name="image"
                                 id="image"
                                 type="file"

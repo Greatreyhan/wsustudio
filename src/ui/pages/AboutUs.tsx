@@ -1,5 +1,4 @@
 import { Cert1, Cert2, Cert3, Cert4, Cert5, Cert6, Cert7, Cert8, Cert9, Cert10, Cert11, Cert12, Cert13, Cert14, Cert15, Cert16, HeroAbout, } from "../../assets/images"
-import { FaPlus } from "react-icons/fa6";
 import FAQ from "../organisms/FAQ";
 
 
@@ -16,7 +15,7 @@ function Aboutus() {
             <img className="md:w-8/12 w-10/12" src={HeroAbout} />
           </div>
           <div className="flex-1 md:mt-0 mt-8 text-center md:text-left">
-            <p className="md:text-3xl text-2xl text-base-dark">“<span className="font-medium text-primary">We are more than just a software house</span>. With over 10 years experience, we have been helping countless individuals bring their digital products to life.​”</p>
+            <p className="md:text-3xl text-2xl text-base-dark">“<span className="font-medium text-primary">We are more than just a software house</span>. With over 10 years experience, we have been helping countless individuals bring their digital products to life."</p>
             <p className="mt-4 text-base-light">We built a solid team from scratch to overcome our clients challenges, we take on every project with dedication and commitment. It's not always easy, but together with our clients, whom we consider family, we've made remarkable achievements.</p>
           </div>
         </div>

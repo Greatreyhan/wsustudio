@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { onValue, ref as rtdbref, remove } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
 import { Link, useParams } from "react-router-dom";
 import { MdEdit, MdDelete } from "react-icons/md";
+import { Subservice } from "../interface/Service";
+import { useFirebase } from "../../utils/FirebaseContext";
+import { truncateText } from "../../utils/StringFunction";
 
-interface SubserviceItem {
-  id: string;
-  type: string;
-  service: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-}
 const AdminSubservice: React.FC = () => {
+  const {getFromDatabase, deleteFromDatabase} = useFirebase()
   const { serviceId } = useParams<{ serviceId:string}>();
-  const [subservices, setSubservices] = useState<Record<string, SubserviceItem>>({});
+  const [subservices, setSubservices] = useState<Record<string, Subservice>>({});
   const [subserviceKeys, setSubserviceKeys] = useState<string[]>([]);
 
   useEffect(() => {
-    onValue(rtdbref(FIREBASE_DB, `service/${serviceId}/subservice`), (snapshot) => {
-      const data = snapshot.val();
+    getFromDatabase(`service/${serviceId}/subservice`).then(data => {
       if (data) {
         const keys = Object.keys(data);
         setSubserviceKeys(keys);
@@ -28,22 +20,6 @@ const AdminSubservice: React.FC = () => {
       }
     });
   }, []);
-
-  const handleDeleteSubservice = (e: React.MouseEvent<HTMLButtonElement>, key: string) => {
-    e.preventDefault();
-    const recordRef = rtdbref(FIREBASE_DB, `service/${serviceId}/subservice/${key}`);
-    remove(recordRef)
-      .then(() => {
-        console.log("Delete success");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  const truncateText = (text:string, limit:number) => {
-    return text?.length > limit ? `${text.slice(0, limit)}...` : text;
-  };
 
   return (
     <div className="w-10/12 mx-auto pt-8">
@@ -90,7 +66,7 @@ const AdminSubservice: React.FC = () => {
                   <button
                     className="p-2 text-rose-800 rounded-full bg-rose-100"
                     type="button"
-                    onClick={(e) => handleDeleteSubservice(e, key)}
+                    onClick={() => deleteFromDatabase(`service/${serviceId}/subservice/${key}`)}
                   >
                     <MdDelete />
                   </button>

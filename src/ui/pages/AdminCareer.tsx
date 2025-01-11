@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { onValue, ref as rtdbref, remove } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
 import { Link } from "react-router-dom";
 import { MdEdit, MdDelete } from "react-icons/md";
-
-interface CareerItem {
-  id: string;
-  title: string;
-  description: string;
-  link: string;
-}
+import { useFirebase } from "../../utils/FirebaseContext";
+import { truncateText } from "../../utils/StringFunction";
+import { Career } from "../interface/Career";
 
 const AdminCareer: React.FC = () => {
-  const [careers, setCareers] = useState<Record<string, CareerItem>>({});
+  const {deleteFromDatabase,getFromDatabase} = useFirebase()
+  const [careers, setCareers] = useState<Record<string, Career>>({});
   const [careerKeys, setCareerKeys] = useState<string[]>([]);
 
   useEffect(() => {
-    onValue(rtdbref(FIREBASE_DB, "career"), (snapshot) => {
-      const data = snapshot.val();
+    getFromDatabase('career').then( data => {
       if (data) {
         const keys = Object.keys(data);
         setCareerKeys(keys);
@@ -25,22 +19,6 @@ const AdminCareer: React.FC = () => {
       }
     });
   }, []);
-
-  const handleDeleteCareer = (e: React.MouseEvent<HTMLButtonElement>, key: string) => {
-    e.preventDefault();
-    const recordRef = rtdbref(FIREBASE_DB, `career/${key}`);
-    remove(recordRef)
-      .then(() => {
-        console.log("Delete success");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  const truncateText = (text:string, limit:number) => {
-    return text?.length > limit ? `${text.slice(0, limit)}...` : text;
-  };
 
   return (
     <div className="w-10/12 mx-auto pt-8">
@@ -92,7 +70,7 @@ const AdminCareer: React.FC = () => {
                   <button
                     className="p-2 text-rose-800 rounded-full bg-rose-100"
                     type="button"
-                    onClick={(e) => handleDeleteCareer(e, key)}
+                    onClick={() => deleteFromDatabase(`career/${key}`)}
                   >
                     <MdDelete />
                   </button>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { onValue, ref as rtdbref, remove } from "firebase/database";
+import { ref as rtdbref, remove } from "firebase/database";
 import { FIREBASE_DB } from "../../config/firebaseinit";
 import { MdEdit, MdDelete } from "react-icons/md";
+import { useFirebase } from "../../utils/FirebaseContext";
 
 interface ArticleData {
   title: string;
@@ -11,14 +12,13 @@ interface ArticleData {
 }
 
 const AdminArticle = () => {
+  const {getFromDatabase, deleteFromDatabase } = useFirebase();
   const [dataArticle, setDataArticle] = useState<{ [key: string]: ArticleData }>({});
   const [keyArticle, setKeyArticle] = useState<string[]>([]);
   const [tagList, setTagList] = useState<string[]>([]);
 
   useEffect(() => {
-    const articleRef = rtdbref(FIREBASE_DB, "article");
-    onValue(articleRef, (snapshot) => {
-      const data = snapshot.val();
+    getFromDatabase(`article`).then((data) => {
       if (data) {
         const tagList: string[] = [];
         const key = Object.keys(data);
@@ -31,22 +31,6 @@ const AdminArticle = () => {
       }
     });
   }, []);
-
-  const handleDeleteArticle = (e: React.MouseEvent, key: string) => {
-    e.preventDefault();
-    const record_ref = rtdbref(FIREBASE_DB, "article/" + key);
-    remove(record_ref)
-      .then(() => {
-        console.log("Delete success");
-        // Optionally, you can add a success message or visual feedback here
-        // Example: toast("Article deleted successfully");
-      })
-      .catch((error) => {
-        console.error("Delete failed: ", error.message);
-        // Optionally, you can add an error message or visual feedback here
-        // Example: toast.error("Failed to delete article");
-      });
-  };
 
   return (
     <div className="w-10/12 mx-auto pt-8">
@@ -87,7 +71,7 @@ const AdminArticle = () => {
                   <button
                     className="p-2 text-rose-800 rounded-full bg-rose-100"
                     type="button"
-                    onClick={(e) => handleDeleteArticle(e, key)}
+                    onClick={() => deleteFromDatabase("article/"+key)}
                   >
                     <MdDelete />
                   </button>

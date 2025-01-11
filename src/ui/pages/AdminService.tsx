@@ -1,36 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { onValue, ref as rtdbref, remove } from "firebase/database";
-import { FIREBASE_DB } from "../../config/firebaseinit";
 import { Link } from "react-router-dom";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaCodeBranch } from "react-icons/fa6";
-
-interface SubserviceItem {
-  id: string;
-  type: string;
-  service: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-}
-interface ServiceItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  icon: string;
-  subservice : SubserviceItem[]
-}
+import { Service } from "../interface/Service";
+import { useFirebase } from "../../utils/FirebaseContext";
+import { truncateText } from "../../utils/StringFunction";
 
 const AdminService: React.FC = () => {
-  const [services, setServices] = useState<Record<string, ServiceItem>>({});
+  const {getFromDatabase, deleteFromDatabase} = useFirebase()
+  const [services, setServices] = useState<Record<string, Service>>({});
   const [serviceKeys, setServiceKeys] = useState<string[]>([]);
 
   useEffect(() => {
-    onValue(rtdbref(FIREBASE_DB, "service"), (snapshot) => {
-      const data = snapshot.val();
+    getFromDatabase("service").then(data => {
       if (data) {
         const keys = Object.keys(data);
         setServiceKeys(keys);
@@ -38,22 +20,6 @@ const AdminService: React.FC = () => {
       }
     });
   }, []);
-
-  const handleDeleteService = (e: React.MouseEvent<HTMLButtonElement>, key: string) => {
-    e.preventDefault();
-    const recordRef = rtdbref(FIREBASE_DB, `service/${key}`);
-    remove(recordRef)
-      .then(() => {
-        console.log("Delete success");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  const truncateText = (text:string, limit:number) => {
-    return text?.length > limit ? `${text.slice(0, limit)}...` : text;
-  };
 
   return (
     <div className="w-10/12 mx-auto pt-8">
@@ -106,7 +72,7 @@ const AdminService: React.FC = () => {
                   <button
                     className="p-2 text-rose-800 rounded-full bg-rose-100"
                     type="button"
-                    onClick={(e) => handleDeleteService(e, key)}
+                    onClick={() => deleteFromDatabase("service/"+key)}
                   >
                     <MdDelete />
                   </button>

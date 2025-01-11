@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { onValue, ref as rtdbRef, set } from "firebase/database";
-import { FIREBASE_STORE, FIREBASE_DB } from "../../config/firebaseinit";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { BiSave } from "react-icons/bi";
-
-interface PortofolioData {
-    title: string;
-    tag: string;
-    desc: string;
-    img: string;
-    content: string;
-}
+import { Portofolio } from "../interface/Portofolio";
+import Editor from "../../utils/Editor";
+import { useFirebase } from "../../utils/FirebaseContext";
+import { handleUpload } from "../../utils/ImageUploader";
 
 const AdminPortofolioEditor: React.FC = () => {
+    const {getFromDatabase, saveToDatabase} = useFirebase()
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [dataEdit, setDataEdit] = useState<string>("");
@@ -26,73 +18,6 @@ const AdminPortofolioEditor: React.FC = () => {
     const [HTML, setHTML] = useState<string>("");
     const [isUpload, setIsUpload] = useState<boolean>(false);
 
-    const custom_config = {
-        extraPlugins: [MyCustomUploadAdapterPlugin],
-        table: {
-            contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
-        },
-    };
-
-    class MyUploadAdapter {
-        loader: any;
-
-        constructor(loader: any) {
-            this.loader = loader;
-        }
-
-        upload() {
-            return this.loader.file.then(
-                (file: File) =>
-                    new Promise((resolve, reject) => {
-                        const storageRef = ref(FIREBASE_STORE, `images/${file.name}`);
-                        const uploadTask = uploadBytesResumable(storageRef, file);
-                        uploadTask.on(
-                            "state_changed",
-                            (snapshot) => {
-                                const progress =
-                                    Math.round(
-                                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                                    );
-                                console.log("Upload is " + progress + "% done");
-                            },
-                            (error) => {
-                                switch (error.code) {
-                                    case "storage/unauthorized":
-                                        reject("User doesn't have permission to access the object");
-                                        break;
-                                    case "storage/canceled":
-                                        reject("User canceled the upload");
-                                        break;
-                                    case "storage/unknown":
-                                        reject(
-                                            "Unknown error occurred, inspect error.serverResponse"
-                                        );
-                                        break;
-                                }
-                            },
-                            () => {
-                                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                                    resolve({
-                                        default: downloadURL,
-                                    });
-                                });
-                            }
-                        );
-                    })
-            );
-        }
-
-        abort() {
-            // Optional method
-        }
-    }
-
-    function MyCustomUploadAdapterPlugin(editor: any) {
-        editor.plugins.get("FileRepository").createUploadAdapter = (loader: any) => {
-            return new MyUploadAdapter(loader);
-        };
-    }
-
     const handleSendData = (e: React.FormEvent) => {
         e.preventDefault();
         if (!img) {
@@ -101,10 +26,7 @@ const AdminPortofolioEditor: React.FC = () => {
         }
 
         setIsUpload(true);
-        const timestamp = Date.now();
-        const dbRef = rtdbRef(FIREBASE_DB, `portofolio/${id || timestamp}`);
-
-        const newData: PortofolioData = {
+        const newData: Portofolio = {
             title,
             tag,
             content: dataEdit,
@@ -112,7 +34,7 @@ const AdminPortofolioEditor: React.FC = () => {
             img: img,
         };
 
-        set(dbRef, newData)
+        saveToDatabase(`portofolio/${id || Date.now()}`, newData)
             .then(() => {
                 setIsUpload(false);
                 navigate("/admin/portofolio");
@@ -123,33 +45,9 @@ const AdminPortofolioEditor: React.FC = () => {
             });
     };
 
-    const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const storageRef = ref(FIREBASE_STORE, `images/${file.name}`);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress =
-                        Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    console.log("Upload is " + progress + "% done");
-                },
-                (error) => console.error(error),
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        setImg(downloadURL);
-                    });
-                }
-            );
-        }
-    };
-
     useEffect(() => {
         if (id) {
-            onValue(rtdbRef(FIREBASE_DB, `portofolio/${id}`), (snapshot) => {
-                const data = snapshot.val() as PortofolioData | null;
+            getFromDatabase(`portofolio/${id}`).then(data => {
                 if (data) {
                     setHTML(data.content);
                     setDataEdit(data.content);
@@ -162,10 +60,6 @@ const AdminPortofolioEditor: React.FC = () => {
         }
     }, [id]);
 
-    const handlerCKEDITOR = (_event: any, editor: any) => {
-        const data = editor.getData();
-        setDataEdit(data);
-    };
 
     return (
         <div className="App overflow-x-hidden">
@@ -233,7 +127,7 @@ const AdminPortofolioEditor: React.FC = () => {
                             )}
                             <input
                                 required
-                                onChange={handleUpload}
+                                onChange={(e)=>handleUpload(e,setImg)}
                                 name="image"
                                 id="image"
                                 type="file"
@@ -241,15 +135,7 @@ const AdminPortofolioEditor: React.FC = () => {
                         </div>
                     </div>
                     <div className="mt-8 w-full">
-                        <CKEditor
-                            editor={ClassicEditor}
-                            config={custom_config}
-                            data={HTML}
-                            onReady={(editor) => {
-                                console.log("Editor is ready to use!", editor);
-                            }}
-                            onChange={(event, editor) => handlerCKEDITOR(event, editor)}
-                        />
+                        <Editor HTML={HTML} setDataEdit={setDataEdit}/>
                     </div>
                     <div className="flex w-full justify-end items-center gap-x-5">
                         <Link
